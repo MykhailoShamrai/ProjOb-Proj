@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project
 {
+    // Class for Airport inherited from ItemParsable
     internal class Airport: ItemParsable
     {
         [JsonInclude]

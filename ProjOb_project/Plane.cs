@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project
 {
+    // Abstract class for planes named Plane. Class Plane inherited from ItemParsable
     abstract internal class Plane: ItemParsable
     {
         [JsonInclude]

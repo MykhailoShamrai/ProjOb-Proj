@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project
 {
+    // Abstract class for persons named Person. Class Person inherited from ItemParsable
     abstract internal class Person: ItemParsable
     {
         [JsonInclude]

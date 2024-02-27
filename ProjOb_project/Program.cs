@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using ProjOb_project.Parsers;
+using ProjOb_project.Serializers;
 
 namespace ProjOb_project
 {
@@ -8,17 +10,6 @@ namespace ProjOb_project
         {
             List<ItemParsable> listOfObjects = Parser.ReadFromFile("example_data.ftr", new FtrParser());
             Serializer.SerializeToFile("objects.json", listOfObjects, new SerializerForJson());
-
-            // TO Później wyrzucić
-            //////
-            /////
-            string path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "objects.json");
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string tmp = sr.ReadToEnd();
-                List<ItemParsable> listOfCopies = JsonSerializer.Deserialize<List<ItemParsable>>(tmp)!;
-            }
         }
     }
 }

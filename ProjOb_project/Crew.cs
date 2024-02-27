@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project
 {
+    // Class for Crew inherited from Person, Person inherited from ItemParsable
     internal class Crew: Person
     {
         [JsonInclude]

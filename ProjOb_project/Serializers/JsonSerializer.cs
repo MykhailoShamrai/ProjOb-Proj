@@ -6,11 +6,13 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Text.Json;
 
-namespace ProjOb_project
+namespace ProjOb_project.Serializers
 {
-    internal class SerializerForJson: Serializer
+    // Class SerializerForJson for json serialization. Inherited from Serializer class
+    internal class SerializerForJson : Serializer
     {
-        public override void SerializeObjects(string path, IEnumerable<ItemParsable> collection)
+        // Overriden method which serialize collection with json serialization to file in path
+        protected override void SerializeObjects(string path, IEnumerable<ItemParsable> collection)
         {
             string jsonString = JsonSerializer.Serialize(collection);
             using (StreamWriter sw = new StreamWriter(path))

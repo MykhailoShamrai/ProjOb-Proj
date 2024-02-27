@@ -16,6 +16,7 @@ namespace ProjOb_project
     [JsonDerivedType(typeof(PassangerPlane), typeDiscriminator: "PP")]
     [JsonDerivedType(typeof(CargoPlane), typeDiscriminator: "CP")]
 
+    // Abstract class for all objects that can be readable from files, like .ftr files
     abstract internal class ItemParsable
     { }
 }

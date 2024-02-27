@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project.NewFolder
 {
+    // Class FactoryForAirport inherited from FactoryForParsable. Is used for creating instances of Airport class.
     internal class FactoryForAirport : FactoryForParsable
     {
+        // Overriden method from creating ItemParsable object, in this case object will be of Airport class.
         public override ItemParsable CreateParsable(string[] parameters)
         {
             ulong id = ulong.Parse(parameters[0]);
