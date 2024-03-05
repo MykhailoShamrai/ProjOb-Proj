@@ -22,7 +22,8 @@ namespace ProjOb_project.NewFolder
             ulong planeId = ulong.Parse(parameters[8]);
             ulong[] crewAsId = Parser.ParseParam2UIntTab(parameters[9]);
             ulong[] loadAsId = Parser.ParseParam2UIntTab(parameters[10]);
-            return new Flight(id, originAsId, targetAsId, takeOffTime, landingTime, coordinates.Item1, coordinates.Item2, coordinates.Item3, planeId, crewAsId, loadAsId);
+            Flight tmp = new Flight(id, originAsId, targetAsId, takeOffTime, landingTime, coordinates.Item1, coordinates.Item2, coordinates.Item3, planeId, crewAsId, loadAsId);
+            return tmp;
         }
     }
 }

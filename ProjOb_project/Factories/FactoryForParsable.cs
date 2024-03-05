@@ -14,6 +14,7 @@ namespace ProjOb_project.NewFolder
     {
         // Abstract creating method for ItemParsable object. As a parameter is array of strings. Each string contains field of object of class defined by ItemParsable.
         // Parameter 'parameters' contains an array in order of constructor parameters for ItemParsable.
+        
         abstract public ItemParsable CreateParsable(string[] parameters);
 
         // Static method, that parses parameters for Person class from array of string, where array of string 'parameters' contains parameters in string in sequence of Person

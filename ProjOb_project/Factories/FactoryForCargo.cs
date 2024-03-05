@@ -10,6 +10,8 @@ namespace ProjOb_project.NewFolder
     // Class FactoryForCargo inherited from FactoryForParsable. Is used for creating instances of Cargo class.
     internal class FactoryForCargo : FactoryForParsable
     {
+        static internal Dictionary<ulong, Cargo> DictionaryForCargo = new Dictionary<ulong, Cargo>();
+
         // Overriden method from creating ItemParsable object, in this case object will be of Cargo class.
         public override ItemParsable CreateParsable(string[] parameters)
         {
@@ -17,7 +19,9 @@ namespace ProjOb_project.NewFolder
             float weight = Parser.ParseStringWithDot2Float(parameters[1]);
             string code = parameters[2];
             string descreption = parameters[3];
-            return new Cargo(id, weight, code, descreption);
+            Cargo tmp = new Cargo(id, weight, code, descreption);
+            DictionaryForCargo.Add(id, tmp);
+            return tmp;
         }
     }
 }

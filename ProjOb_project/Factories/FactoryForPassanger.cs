@@ -9,6 +9,7 @@ namespace ProjOb_project.NewFolder
     // Class FactoryForPassanger inherited from FactoryForParsable. Is used for creating instances of Passanger class.
     internal class FactoryForPassanger : FactoryForParsable
     {
+        static internal Dictionary<ulong, Passanger> DictionaryForPassanger = new Dictionary<ulong, Passanger>();
         // Overriden method from creating ItemParsable object, in this case object will be of Passanger class.
         public override ItemParsable CreateParsable(string[] parameters)
         {
