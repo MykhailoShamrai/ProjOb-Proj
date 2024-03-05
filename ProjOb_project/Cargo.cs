@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project
 {
     // Class for Cargo inherited from ItemParsable
-    internal class Cargo: ItemParsable
+    internal class Cargo: ItemParsable, ILoadable
     {
         [JsonInclude]
         private ulong _id;

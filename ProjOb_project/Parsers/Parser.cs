@@ -44,6 +44,10 @@ namespace ProjOb_project.Parsers
                     }
                 }
             }
+            foreach(var item in FactoryForFlight.DictionaryForFlight)
+            {
+                item.Value.LoadLists();
+            }
             return collection;
         }
 

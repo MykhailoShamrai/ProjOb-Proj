@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.NewFolder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,8 +31,12 @@ namespace ProjOb_project
         private ulong _planeAsId;
         [JsonInclude]
         private ulong[] _crewAsId;
+
+        private List<Crew> _crewList = new List<Crew>();
         [JsonInclude]
         private ulong[] _loadAsId;
+
+        private List<ILoadable> _loadList = new List<ILoadable>();
 
         public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float _longtitude, float _latitude, float _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
         {
@@ -46,6 +51,28 @@ namespace ProjOb_project
             this._planeAsId = _planeAsId;
             this._crewAsId = _crewAsId;
             this._loadAsId = _loadAsId;
+        }
+
+        public void LoadLists()
+        {
+            foreach (ulong item in _crewAsId)
+            {
+                _crewList.Add(FactoryForCrew.DictionaryForCrew[item]);
+            }
+            if(FactoryForPassangerPlane.DictionaryForPassangerPlane.ContainsKey(_planeAsId))
+            {
+                foreach(ulong id in _loadAsId)
+                {
+                    _loadList.Add(FactoryForPassanger.DictionaryForPassanger[id]);
+                }
+            }
+            else if (FactoryForCargoPlane.DictionaryForCargoPlane.ContainsKey(_planeAsId))
+            {
+                foreach(ulong id in _loadAsId)
+                {
+                    _loadList.Add(FactoryForCargo.DictionaryForCargo[id]);
+                }
+            }
         }
     }
 }

@@ -16,7 +16,9 @@ namespace ProjOb_project.NewFolder
             (ulong, string, ulong, string, string) personParams = ParseForPerson(parameters[0..5]);
             string classType = parameters[5];
             ulong miles = ulong.Parse(parameters[6]);
-            return new Passanger(personParams.Item1, personParams.Item2, personParams.Item3, personParams.Item4, personParams.Item5, classType, miles);
+            Passanger tmp = new Passanger(personParams.Item1, personParams.Item2, personParams.Item3, personParams.Item4, personParams.Item5, classType, miles);
+            DictionaryForPassanger.Add(personParams.Item1, tmp);
+            return tmp;
         }
     }
 }

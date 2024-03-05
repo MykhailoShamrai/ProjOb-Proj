@@ -10,6 +10,8 @@ namespace ProjOb_project.NewFolder
     // Class FactoryForFlight inherited from FactoryForParsable. Is used for creating instances of Flight class.
     internal class FactoryForFlight : FactoryForParsable
     {
+        static internal Dictionary<ulong, Flight> DictionaryForFlight = new Dictionary<ulong, Flight>();
+
         // Overriden method from creating ItemParsable object, in this case object will be of Flight class.
         public override ItemParsable CreateParsable(string[] parameters)
         {
@@ -23,6 +25,7 @@ namespace ProjOb_project.NewFolder
             ulong[] crewAsId = Parser.ParseParam2UIntTab(parameters[9]);
             ulong[] loadAsId = Parser.ParseParam2UIntTab(parameters[10]);
             Flight tmp = new Flight(id, originAsId, targetAsId, takeOffTime, landingTime, coordinates.Item1, coordinates.Item2, coordinates.Item3, planeId, crewAsId, loadAsId);
+            DictionaryForFlight.Add(id, tmp);
             return tmp;
         }
     }
