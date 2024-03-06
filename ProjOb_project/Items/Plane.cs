@@ -5,10 +5,10 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ProjOb_project
+namespace ProjOb_project.Items
 {
     // Abstract class for planes named Plane. Class Plane inherited from ItemParsable
-    abstract internal class Plane: ItemParsable
+    abstract internal class Plane : ItemParsable
     {
         [JsonInclude]
         private ulong _id;
@@ -24,7 +24,7 @@ namespace ProjOb_project
             this._id = _id;
             this._serial = _serial;
             this._countryIso = _countryIso;
-            this._model = _model; 
+            this._model = _model;
         }
     }
 }

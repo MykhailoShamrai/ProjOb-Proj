@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ProjOb_project
+namespace ProjOb_project.Items
 {
     [JsonDerivedType(typeof(Airport), typeDiscriminator: "AI")]
     [JsonDerivedType(typeof(Flight), typeDiscriminator: "FL")]

@@ -13,8 +13,8 @@
 	  </None>
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="copy &quot;$(ProjectDir)\Data\*.*&quot; &quot;$(TargetDir)&quot;" />
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec Command="copy &quot;$Data\*.*&quot; &quot;(ProjectDir)&quot;" />
 	</Target>
 
 </Project>

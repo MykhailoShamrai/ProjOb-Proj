@@ -5,10 +5,10 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ProjOb_project
+namespace ProjOb_project.Items
 {
     // Abstract class for persons named Person. Class Person inherited from ItemParsable
-    abstract internal class Person: ItemParsable
+    abstract internal class Person : ItemParsable
     {
         [JsonInclude]
         private ulong _id;
@@ -21,7 +21,7 @@ namespace ProjOb_project
         [JsonInclude]
         private string _email;
 
-        public Person(ulong id = default, string name= default, ulong age = default, string phone = default, string email = default)
+        public Person(ulong id = default, string name = default, ulong age = default, string phone = default, string email = default)
         {
             _id = id;
             _name = name;

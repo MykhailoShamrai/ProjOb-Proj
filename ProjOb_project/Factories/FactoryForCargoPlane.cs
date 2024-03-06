@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjOb_project.Items;
 using ProjOb_project.Parsers;
 
 namespace ProjOb_project.NewFolder
 {
-
     // Class FactoryForCargoPlane inherited from FactoryForParsable. Is used for creating instances of CargoPlane class.
     internal class FactoryForCargoPlane : FactoryForParsable
     {

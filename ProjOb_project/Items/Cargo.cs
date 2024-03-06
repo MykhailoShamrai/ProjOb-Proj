@@ -5,10 +5,10 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ProjOb_project
+namespace ProjOb_project.Items
 {
     // Class for Cargo inherited from ItemParsable
-    internal class Cargo: ItemParsable, ILoadable
+    internal class Cargo : ItemParsable, ILoadable
     {
         [JsonInclude]
         private ulong _id;
