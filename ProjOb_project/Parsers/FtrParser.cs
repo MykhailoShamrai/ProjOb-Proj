@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProjOb_project.Parsers
+﻿namespace ProjOb_project.Parsers
 {
     // Class FtrParser inherited from Parser class
     internal class FtrParser : Parser
