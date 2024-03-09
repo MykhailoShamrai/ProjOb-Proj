@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,11 @@ namespace ProjOb_project.Items
         {
             this._class = _class;
             this._miles = _miles;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitPassanger(this);
         }
     }
 }

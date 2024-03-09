@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,11 @@ namespace ProjOb_project.Items
             base(_id, _serial, _countryIso, _model)
         {
             this._maxLoad = _maxLoad;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitCargoPlane(this);
         }
     }
 }

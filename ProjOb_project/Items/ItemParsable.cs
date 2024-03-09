@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace ProjOb_project.Items
 
     // Abstract class for all objects that can be readable from files, like .ftr files
     abstract internal class ItemParsable
-    { }
+    {
+        abstract public void acceptVisitor(Visitor visitor);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace ProjOb_project.Items
         {
             this._practise = _practise;
             this._role = _role;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitCrew(this);
         }
     }
 }

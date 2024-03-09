@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ProjOb_project.Items;
 using ProjOb_project.Parsers;
 
-namespace ProjOb_project.NewFolder
+namespace ProjOb_project.Factories
 {
     // Abstract class for all factories for classes inherited from ItemParsable.
     abstract internal class FactoryForParsable

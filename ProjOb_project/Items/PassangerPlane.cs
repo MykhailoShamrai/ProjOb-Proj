@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,11 @@ namespace ProjOb_project.Items
             this._businessClassSize = _businessClassSize;
             this._firstClassSize = _firstClassSize;
             this._economyClassSize = _economyClassSize;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitPassangerPlane(this);
         }
     }
 }

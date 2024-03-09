@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,13 +22,13 @@ namespace ProjOb_project.Items
         [JsonInclude]
         private string _email;
 
-        public Person(ulong id = default, string name = default, ulong age = default, string phone = default, string email = default)
+        public Person(ulong _id, string _name, ulong _age, string _phone, string _email)
         {
-            _id = id;
-            _name = name;
-            _age = age;
-            _phone = phone;
-            _email = email;
+            this._id = _id;
+            this._name = _name;
+            this._age = _age;
+            this._phone = _phone;
+            this._email = _email; 
         }
     }
 }

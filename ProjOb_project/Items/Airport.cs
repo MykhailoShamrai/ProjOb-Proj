@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,11 @@ namespace ProjOb_project.Items
             this._latitude = _latitude;
             this._amsl = _amsl;
             this._countryIso = _countryIso;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitAirport(this);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjOb_project.Visitors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,11 @@ namespace ProjOb_project.Items
             this._weight = _weight;
             this._code = _code;
             this._description = _description;
+        }
+
+        public override void acceptVisitor(Visitor visitor)
+        {
+            visitor.visitCargo(this);
         }
     }
 }

@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 using ProjOb_project.Items;
 using ProjOb_project.Parsers;
 
-namespace ProjOb_project.NewFolder
+namespace ProjOb_project.Factories
 {
     // Class FactoryForFlight inherited from FactoryForParsable. Is used for creating instances of Flight class.
     internal class FactoryForFlight : FactoryForParsable
     {
-        static internal Dictionary<ulong, Flight> DictionaryForFlight = new Dictionary<ulong, Flight>();
-
         // Overriden method from creating ItemParsable object, in this case object will be of Flight class.
-        public override ItemParsable CreateParsable(string[] parameters)
+        public override Flight CreateParsable(string[] parameters)
         {
             ulong id = ulong.Parse(parameters[0]);
             ulong originAsId = ulong.Parse(parameters[1]);
@@ -26,7 +24,7 @@ namespace ProjOb_project.NewFolder
             ulong[] crewAsId = Parser.ParseParam2UIntTab(parameters[9]);
             ulong[] loadAsId = Parser.ParseParam2UIntTab(parameters[10]);
             Flight tmp = new Flight(id, originAsId, targetAsId, takeOffTime, landingTime, coordinates.Item1, coordinates.Item2, coordinates.Item3, planeId, crewAsId, loadAsId);
-            DictionaryForFlight.Add(id, tmp);
+            Database.DictionaryForFlight.Add(id, tmp);
             return tmp;
         }
     }

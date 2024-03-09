@@ -1,15 +1,11 @@
-﻿using ProjOb_project.NewFolder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using ProjOb_project.Visitors;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+
 
 namespace ProjOb_project.Items
 {
     // Class for Flights inherited from ItemParsable
-    internal class Flight : ItemParsable
+    internal class Flight : ItemParsable, IJsonOnDeserialized
     {
         [JsonInclude]
         private ulong _id;
@@ -29,13 +25,46 @@ namespace ProjOb_project.Items
         private float _amsl;
         [JsonInclude]
         private ulong _planeAsId;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong PlaneAsId
+        {
+            get { return _planeAsId; }
+        }
+
         [JsonInclude]
         private ulong[] _crewAsId;
-        private List<Crew> _crewList = new List<Crew>();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong[] CrewAsId
+        {
+            get
+            {
+                ulong[] tmp = new ulong[_crewAsId.Length];
+                Array.Copy(_crewAsId, tmp, _crewAsId.Length);
+                return tmp;
+            }
+        }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public List<Crew> CrewList { get; set; } = new List<Crew>();
 
         [JsonInclude]
         private ulong[] _loadAsId;
-        private List<ILoadable> _loadList = new List<ILoadable>();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong[] LoadAsId
+        {
+            get
+            {
+                ulong[] tmp = new ulong[_loadAsId.Length];
+                Array.Copy(_loadAsId, tmp, _loadAsId.Length);
+                return tmp;
+            }
+        }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public List<ILoadable> LoadList { get; set; } = new List<ILoadable>();
 
         public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float _longtitude, float _latitude, float _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
         {
@@ -52,27 +81,17 @@ namespace ProjOb_project.Items
             this._loadAsId = _loadAsId;
         }
 
-        // Loading all requiered references to crew and load to Flight object
-        public void LoadLists()
+        public override void acceptVisitor(Visitor visitor)
         {
-            foreach (ulong item in _crewAsId)
-            {
-                _crewList.Add(FactoryForCrew.DictionaryForCrew[item]);
-            }
-            if (FactoryForPassangerPlane.DictionaryForPassangerPlane.ContainsKey(_planeAsId))
-            {
-                foreach (ulong id in _loadAsId)
-                {
-                    _loadList.Add(FactoryForPassanger.DictionaryForPassanger[id]);
-                }
-            }
-            else if (FactoryForCargoPlane.DictionaryForCargoPlane.ContainsKey(_planeAsId))
-            {
-                foreach (ulong id in _loadAsId)
-                {
-                    _loadList.Add(FactoryForCargo.DictionaryForCargo[id]);
-                }
-            }
+            visitor.visitFlight(this);
+        }
+
+        /// <summary>
+        /// Overrided method OnDeserialized for linking all objects with ids from CrewAsId and LoadAsId
+        /// </summary>
+        public void OnDeserialized()
+        {
+            acceptVisitor(new FtrParseVisitor());
         }
     }
 }
