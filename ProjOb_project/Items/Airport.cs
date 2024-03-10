@@ -11,6 +11,8 @@ namespace ProjOb_project.Items
     // Class for Airport inherited from ItemParsable
     internal class Airport : ItemParsable
     {
+        static public int FieldsCount { get; set; } = 7;
+
         [JsonInclude]
         private ulong _id;
         [JsonInclude]

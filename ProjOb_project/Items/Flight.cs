@@ -7,6 +7,7 @@ namespace ProjOb_project.Items
     // Class for Flights inherited from ItemParsable
     internal class Flight : ItemParsable, IJsonOnDeserialized
     {
+        static public int FieldsCount { get; set; } = 11;
         [JsonInclude]
         private ulong _id;
         [JsonInclude]

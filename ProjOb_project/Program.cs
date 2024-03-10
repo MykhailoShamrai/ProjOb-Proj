@@ -11,6 +11,13 @@ namespace ProjOb_project
         {
             List<ItemParsable> listOfObjects = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
             Serializer.SerializeToFile("objects.json", listOfObjects, new SerializerForJson());
+
+            ServerTCPHandler handler = ServerTCPHandler.getInstance();
+            handler.Run();
+            Console.WriteLine("www");
+            while (Console.ReadLine() != "exit") {
+            }
+            Console.WriteLine("Main thread exits");
         }
     }
 }

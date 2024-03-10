@@ -65,5 +65,6 @@ namespace ProjOb_project.Parsers
         {
             return float.Parse(param, CultureInfo.InvariantCulture);
         }
+
     }
 }

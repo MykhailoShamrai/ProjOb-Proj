@@ -11,6 +11,7 @@ namespace ProjOb_project.Items
     // Class for Cargo inherited from ItemParsable
     internal class Cargo : ItemParsable, ILoadable
     {
+        static public int FieldsCount { get; set; } = 4;
         [JsonInclude]
         private ulong _id;
         [JsonInclude]
