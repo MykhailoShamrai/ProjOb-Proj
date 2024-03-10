@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project.LineReaders
 {
-    internal class FlightReader: BinaryLineReader
+    internal class FlightLineReader: BinaryLineReader
     {
         public override string[] ReadFieldsFromMessage(uint size, byte[] tab)
         {

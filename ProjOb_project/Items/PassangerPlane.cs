@@ -11,6 +11,7 @@ namespace ProjOb_project.Items
     // Class for Passanger Plane inherited from Plane, Plane inherited from ItemParsable
     internal class PassangerPlane : Plane
     {
+        static public int FieldsCount { get; set; } = 7;
         [JsonInclude]
         private ushort _firstClassSize;
         [JsonInclude]

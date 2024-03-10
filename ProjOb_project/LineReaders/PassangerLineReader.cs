@@ -2,21 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjOb_project.LineReaders
 {
-    internal class CrewReader: BinaryLineReader
+    internal class PassangerLineReader: BinaryLineReader
     {
         public override string[] ReadFieldsFromMessage(uint size, byte[] tab)
         {
             ushort currentOffset = OFFSET_SIZE;
-            string[] fields = new string[Crew.FieldsCount];
+            string[] fields = new string[Passanger.FieldsCount];
             ulong Id = BitConverter.ToUInt64(tab, currentOffset);
-            currentOffset += sizeof(ulong);
             fields[0] = Id.ToString();
+            currentOffset += sizeof(ulong);
             ushort nameLength = BitConverter.ToUInt16(tab, currentOffset);
             currentOffset += sizeof(ushort);
             fields[1] = Encoding.ASCII.GetString(tab, currentOffset, nameLength);
@@ -30,8 +29,11 @@ namespace ProjOb_project.LineReaders
             currentOffset += sizeof(ushort);
             fields[4] = Encoding.ASCII.GetString(tab, currentOffset, emailLength);
             currentOffset += emailLength;
-            char role = Encoding.ASCII.GetChars(tab, currentOffset, 1)[0]; /// ???
-            fields[5] = role.ToString();
+            char classOf = Encoding.ASCII.GetChars(tab, currentOffset, 1)[0];
+            currentOffset += 1;
+            fields[5] = classOf.ToString();
+            ulong miles = BitConverter.ToUInt64(tab, currentOffset);
+            fields[6] = miles.ToString();
             return fields;
         }
     }
