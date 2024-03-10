@@ -18,7 +18,7 @@ namespace ProjOb_project.LineReaders
             fields[0] = Id.ToString();
             float weight = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
-            fields[1] = weight.ToString();
+            fields[1] = weight.ToString(System.Globalization.CultureInfo.InvariantCulture);
             fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 6);
             currentOffset += 6;
             ushort descLength = BitConverter.ToUInt16(tab, currentOffset);

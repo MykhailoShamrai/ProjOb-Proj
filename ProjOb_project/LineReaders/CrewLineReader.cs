@@ -30,8 +30,11 @@ namespace ProjOb_project.LineReaders
             currentOffset += sizeof(ushort);
             fields[4] = Encoding.ASCII.GetString(tab, currentOffset, emailLength);
             currentOffset += emailLength;
+            ushort practise = BitConverter.ToUInt16(tab, currentOffset);
+            currentOffset += sizeof(ushort);
+            fields[5] = practise.ToString();
             char role = Encoding.ASCII.GetChars(tab, currentOffset, 1)[0]; /// ???
-            fields[5] = role.ToString();
+            fields[6] = role.ToString();
             return fields;
         }
     }

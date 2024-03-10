@@ -63,7 +63,7 @@ namespace ProjOb_project.Parsers
         // Method for parsing string that contains single value written with 'dot' like 1.25
         static public float ParseStringWithDot2Float(string param)
         {
-            return float.Parse(param, CultureInfo.InvariantCulture);
+            return float.Parse(param, CultureInfo.InvariantCulture) ;
         }
 
     }

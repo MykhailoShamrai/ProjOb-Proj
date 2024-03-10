@@ -19,6 +19,7 @@ namespace ProjOb_project.LineReaders
             fields[1] = Encoding.ASCII.GetString(tab, currentOffset, 10);
             currentOffset += 10;
             fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 3);
+            currentOffset += 3;
             ushort modelLenght = BitConverter.ToUInt16(tab, currentOffset);
             currentOffset += sizeof(ushort);
             fields[3] = Encoding.ASCII.GetString(tab, currentOffset, modelLenght);

@@ -9,14 +9,14 @@ namespace ProjOb_project
     {
         static void Main(string[] args)
         {
-            List<ItemParsable> listOfObjects = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
-            Serializer.SerializeToFile("objects.json", listOfObjects, new SerializerForJson());
+            //List<ItemParsable> listOfObjects = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
+            //Serializer.SerializeToFile("objects.json", listOfObjects, new SerializerForJson());
 
-            //ServerTCPHandler handler = ServerTCPHandler.getInstance();
-            //handler.Run();
-            //Console.WriteLine("www");
-            //while (Console.ReadLine() != "exit") {
-            //}
+            ServerTCPHandler handler = ServerTCPHandler.getInstance();
+            handler.Run();
+            Console.WriteLine("www");
+            while (true) {
+            }
             //Console.WriteLine("Main thread exits");
         }
     }

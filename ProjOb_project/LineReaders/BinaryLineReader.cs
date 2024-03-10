@@ -3,7 +3,9 @@ using ProjOb_project.Factories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,20 +14,20 @@ namespace ProjOb_project.LineReaders
 {
 
     abstract internal class BinaryLineReader
-    { 
+    {
         /// <summary>
         /// Class for reading Messages from TCP server in, where message is binary array. 
         /// </summary>
         /// 
-        public Dictionary<string, BinaryLineReader> AllLineReaders = CreateAllReaders();
+        public static Dictionary<string, BinaryLineReader> AllLineReaders = CreateAllReaders();
 
         protected const ushort TYPENAME_SIZE = 3;
         protected const ushort LENGTH_SIZE = 4;
         protected const ushort OFFSET_SIZE = TYPENAME_SIZE + LENGTH_SIZE;
-        static (string, uint, byte[]) ReadSizeAndType(Message msg)
+        public static (string, uint, byte[]) ReadSizeAndType(Message msg)
         {
             byte[] bytes = msg.MessageBytes;
-            string type = Encoding.ASCII.GetString(bytes, 0, TYPENAME_SIZE);
+            string type = TypeIdentifiersDictionary[Encoding.ASCII.GetString(bytes, 0, TYPENAME_SIZE)];
             uint size = BitConverter.ToUInt32(bytes, TYPENAME_SIZE);
             return (type, size, bytes);
         }
@@ -38,16 +40,29 @@ namespace ProjOb_project.LineReaders
         {
             Dictionary<string, BinaryLineReader> res = new Dictionary<string, BinaryLineReader>
             {
-                { "NCR", new CrewLineReader() },
-                { "NPA", new PassangerLineReader() },
-                { "NCA", new CargoLineReader() },
-                { "NCP", new CargoPlaneLineReader() },
-                { "NPP", new PassangerPlaneLineReader() },
-                { "NAI", new AirportLineReader() },
-                { "NFL", new FlightLineReader() }
+                { "C", new CrewLineReader() },
+                { "P", new PassangerLineReader() },
+                { "CA", new CargoLineReader() },
+                { "CP", new CargoPlaneLineReader() },
+                { "PP", new PassangerPlaneLineReader() },
+                { "AI", new AirportLineReader() },
+                { "FL", new FlightLineReader() }
             };
             return res;
         }
+
+        private static Dictionary<string, string> TypeIdentifiersDictionary = new Dictionary<string, string>
+        {
+            { "NCR", "C"},
+            { "NPA", "P"},
+            { "NCA", "CA"},
+            { "NCP", "CP"},
+            { "NPP", "PP"},
+            { "NAI", "AI"},
+            { "NFL", "FL"}
+        };
+
+        
     }
 
 }

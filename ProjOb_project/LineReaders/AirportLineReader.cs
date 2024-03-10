@@ -25,13 +25,13 @@ namespace ProjOb_project.LineReaders
             currentOffset += 3;
             float longitude = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
-            fields[3] = longitude.ToString();
+            fields[3] = longitude.ToString(System.Globalization.CultureInfo.InvariantCulture);
             float latitude = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
-            fields[4] = latitude.ToString();
+            fields[4] = latitude.ToString(System.Globalization.CultureInfo.InvariantCulture);
             float amsl = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
-            fields[5] = amsl.ToString();
+            fields[5] = amsl.ToString(System.Globalization.CultureInfo.InvariantCulture);
             fields[6] = Encoding.ASCII.GetString(tab, currentOffset, 3);
             return fields;
         }

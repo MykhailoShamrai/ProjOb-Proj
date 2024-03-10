@@ -44,11 +44,36 @@ namespace ProjOb_project.Factories
 
         // Static method, that parses parameters for 3 fields: longtitude, latitude and amsl. Array of strings 'parameters' must contain data for this 3 fields in order
         // longtitude, latitude, amsl.
-        static protected (float, float, float) ParseCoordinates(string[] parameters)
+        static protected (float?, float?, float?) ParseCoordinates(string[] parameters)
         {
-            float longitude = Parser.ParseStringWithDot2Float(parameters[0]);
-            float latitude = Parser.ParseStringWithDot2Float(parameters[1]);
-            float amsl = Parser.ParseStringWithDot2Float(parameters[2]);
+            float? longitude;
+            float? latitude;
+            float? amsl;
+
+            if (parameters[0].Length == 0)
+            {
+                longitude = null;
+            }
+            else
+            {
+                longitude = Parser.ParseStringWithDot2Float(parameters[0]);
+            }
+            if (parameters[1].Length == 0)
+            {
+                latitude = null;
+            }
+            else
+            {
+                latitude = Parser.ParseStringWithDot2Float(parameters[1]);   
+            }
+            if (parameters[2].Length == 0)
+            {
+                amsl = null;
+            }
+            else
+            {
+                amsl = Parser.ParseStringWithDot2Float(parameters[2]);
+            }
             return (longitude, latitude, amsl);
         }
 
