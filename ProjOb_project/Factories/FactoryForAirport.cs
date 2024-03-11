@@ -16,7 +16,7 @@ namespace ProjOb_project.Factories
             ulong id = ulong.Parse(parameters[0]);
             string name = parameters[1];
             string code = parameters[2];
-            (float, float, float) coordinates = ParseCoordinates(parameters[3..6]);
+            (float?, float?, float?) coordinates = ParseCoordinates(parameters[3..6]);
             string countryIso = parameters[6];
             Airport tmp = new Airport(id, name, code, coordinates.Item1, coordinates.Item2, coordinates.Item3, countryIso);
             Database.DictionaryForAirport.Add(id, tmp);

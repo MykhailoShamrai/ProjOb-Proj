@@ -23,7 +23,7 @@ namespace ProjOb_project.Parsers
         static public List<ItemParsable> ReadFromFile(string filename, Parser parser, Visitor visitor)
         {
             List<ItemParsable> collection = new List<ItemParsable>();
-            Dictionary<string, FactoryForParsable> dictWithFactories = FactoryForParsable.CreateAllFactories();
+            //Dictionary<string, FactoryForParsable> dictWithFactories = FactoryForParsable.CreateAllFactories();
             string classType;
             string[] parameters;
             string? line;
@@ -33,9 +33,9 @@ namespace ProjOb_project.Parsers
                 {
                     // If we can read the line, find class identifier and parameters, and then find apropriate Factory object in dictionary. After that add newly created object to list.
                     (classType, parameters) = parser.FindClass(line);
-                    if (dictWithFactories.ContainsKey(classType))
+                    if (FactoryForParsable.AllFactoriesDictionary.ContainsKey(classType))
                     {
-                        collection.Add(dictWithFactories[classType].CreateParsable(parameters));
+                        collection.Add(FactoryForParsable.AllFactoriesDictionary[classType].CreateParsable(parameters));
                     }
                 }
             }
@@ -44,6 +44,7 @@ namespace ProjOb_project.Parsers
             {
                 parsable.acceptVisitor(visitor);
             }
+            Database.AllObjects.Concat(collection);
             return collection;
         }
 
@@ -63,7 +64,8 @@ namespace ProjOb_project.Parsers
         // Method for parsing string that contains single value written with 'dot' like 1.25
         static public float ParseStringWithDot2Float(string param)
         {
-            return float.Parse(param, CultureInfo.InvariantCulture);
+            return float.Parse(param, CultureInfo.InvariantCulture) ;
         }
+
     }
 }

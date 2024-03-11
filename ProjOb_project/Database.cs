@@ -1,14 +1,13 @@
 ﻿using ProjOb_project.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjOb_project
 {
-    internal class Database
+    /// <summary>
+    /// Static database class with Dictionaries for each type of objects (ItemParsable) and one List for all created objects.
+    /// </summary>
+    internal static class Database
     {
+        static public List<ItemParsable> AllObjects { get; set; } = new List<ItemParsable>();
         static public Dictionary<ulong, PassangerPlane> DictionaryForPassangerPlane { get; set; } = new Dictionary<ulong, PassangerPlane>();
         static public Dictionary<ulong, Passanger> DictionaryForPassanger { get; set; } = new Dictionary<ulong, Passanger>();
         static public Dictionary<ulong, Flight> DictionaryForFlight { get; set; } = new Dictionary<ulong, Flight>();

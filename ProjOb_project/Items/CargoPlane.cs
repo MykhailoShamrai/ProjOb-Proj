@@ -11,6 +11,7 @@ namespace ProjOb_project.Items
     // Class for Cargo Plane inherited from Plane, and Plane inherited from ItemParsable
     internal class CargoPlane : Plane
     {
+        static public int FieldsCount { get; set; } = 5;
         [JsonInclude]
         private float _maxLoad;
 

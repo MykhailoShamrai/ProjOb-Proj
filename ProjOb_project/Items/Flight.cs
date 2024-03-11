@@ -7,6 +7,7 @@ namespace ProjOb_project.Items
     // Class for Flights inherited from ItemParsable
     internal class Flight : ItemParsable, IJsonOnDeserialized
     {
+        static public int FieldsCount { get; set; } = 11;
         [JsonInclude]
         private ulong _id;
         [JsonInclude]
@@ -18,13 +19,16 @@ namespace ProjOb_project.Items
         [JsonInclude]
         private string _landingTime;
         [JsonInclude]
-        private float _longtitude;
+        private float? _longtitude;
         [JsonInclude]
-        private float _latitude;
+        private float? _latitude;
         [JsonInclude]
-        private float _amsl;
+        private float? _amsl;
         [JsonInclude]
         private ulong _planeAsId;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public Plane? Plane { get; set; } = null;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public ulong PlaneAsId
@@ -66,7 +70,7 @@ namespace ProjOb_project.Items
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public List<ILoadable> LoadList { get; set; } = new List<ILoadable>();
 
-        public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float _longtitude, float _latitude, float _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
+        public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float? _longtitude, float? _latitude, float? _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
         {
             this._id = _id;
             this._originAsId = _originAsId;
