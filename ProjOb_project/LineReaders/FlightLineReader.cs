@@ -28,8 +28,7 @@ namespace ProjOb_project.LineReaders
                 ":" + DateTime.UnixEpoch.AddMilliseconds(takeOfMsUTC).Minute.ToString();
             long landingMsUTC = BitConverter.ToInt64(tab, currentOffset);
             currentOffset += sizeof(long);
-            fields[4] = DateTime.UnixEpoch.AddMilliseconds(landingMsUTC).Hour.ToString() +
-                ":" + DateTime.UnixEpoch.AddMilliseconds(landingMsUTC).Minute.ToString();
+            fields[4] = DateTime.UnixEpoch.AddMilliseconds(landingMsUTC).ToString("HH:mm");
 
             fields[5] = ""; // Longtitude
             fields[6] = ""; // Latitude

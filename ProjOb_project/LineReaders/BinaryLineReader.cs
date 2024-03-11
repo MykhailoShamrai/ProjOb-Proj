@@ -19,7 +19,7 @@ namespace ProjOb_project.LineReaders
         /// Class for reading Messages from TCP server in, where message is binary array. 
         /// </summary>
         /// 
-        public static Dictionary<string, BinaryLineReader> AllLineReaders = CreateAllReaders();
+        internal static readonly Dictionary<string, BinaryLineReader> AllLineReaders = CreateAllReaders();
 
         protected const ushort TYPENAME_SIZE = 3;
         protected const ushort LENGTH_SIZE = 4;
@@ -61,8 +61,5 @@ namespace ProjOb_project.LineReaders
             { "NAI", "AI"},
             { "NFL", "FL"}
         };
-
-        
     }
-
 }

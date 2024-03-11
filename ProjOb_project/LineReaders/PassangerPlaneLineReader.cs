@@ -16,13 +16,13 @@ namespace ProjOb_project.LineReaders
             ulong Id = BitConverter.ToUInt64(tab, currentOffset);
             fields[0] = Id.ToString();
             currentOffset += sizeof(ulong);
-            fields[1] = Encoding.ASCII.GetString(tab, currentOffset, 10);
             currentOffset += 10;
-            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 3);
+            fields[1] = Encoding.ASCII.GetString(tab, currentOffset, 10).Trim('\0');
+            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 3).Trim('\0');
             currentOffset += 3;
             ushort modelLength = BitConverter.ToUInt16(tab, currentOffset);
             currentOffset += sizeof(ushort);
-            fields[3] = Encoding.ASCII.GetString(tab, currentOffset, modelLength);
+            fields[3] = Encoding.ASCII.GetString(tab, currentOffset, modelLength).Trim('\0');
             currentOffset += modelLength;
             ushort firstClassSize = BitConverter.ToUInt16(tab, currentOffset);
             currentOffset += sizeof(ushort);

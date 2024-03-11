@@ -21,7 +21,7 @@ namespace ProjOb_project.LineReaders
             currentOffset += sizeof(ushort);
             fields[1] = Encoding.ASCII.GetString(tab, currentOffset, nameLength);
             currentOffset += nameLength;
-            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 3);
+            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 3).Trim('\0');
             currentOffset += 3;
             float longitude = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
@@ -32,7 +32,7 @@ namespace ProjOb_project.LineReaders
             float amsl = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
             fields[5] = amsl.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            fields[6] = Encoding.ASCII.GetString(tab, currentOffset, 3);
+            fields[6] = Encoding.ASCII.GetString(tab, currentOffset, 3).Trim('\0');
             return fields;
         }
     }

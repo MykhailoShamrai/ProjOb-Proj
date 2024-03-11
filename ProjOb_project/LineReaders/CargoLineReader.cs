@@ -19,11 +19,11 @@ namespace ProjOb_project.LineReaders
             float weight = BitConverter.ToSingle(tab, currentOffset);
             currentOffset += sizeof(float);
             fields[1] = weight.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 6);
+            fields[2] = Encoding.ASCII.GetString(tab, currentOffset, 6).Trim('\0');
             currentOffset += 6;
             ushort descLength = BitConverter.ToUInt16(tab, currentOffset);
             currentOffset += sizeof(ushort);
-            fields[3] = Encoding.ASCII.GetString(tab, currentOffset, descLength);
+            fields[3] = Encoding.ASCII.GetString(tab, currentOffset, descLength).Trim('\0');
             return fields;
         }
     }

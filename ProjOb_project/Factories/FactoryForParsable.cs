@@ -15,7 +15,7 @@ namespace ProjOb_project.Factories
     {
         // Abstract creating method for ItemParsable object. As a parameter is array of strings. Each string contains field of object of class defined by ItemParsable.
         // Parameter 'parameters' contains an array in order of constructor parameters for ItemParsable.
-        internal static Dictionary<string, FactoryForParsable> AllFactoriesDictionary = CreateAllFactories();
+        internal static readonly Dictionary<string, FactoryForParsable> AllFactoriesDictionary = CreateAllFactories();
 
         abstract public ItemParsable CreateParsable(string[] parameters);
 
