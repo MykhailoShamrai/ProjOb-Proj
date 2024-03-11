@@ -13,17 +13,32 @@ using System.Threading.Tasks;
 namespace ProjOb_project.LineReaders
 {
 
+    /// <summary>
+    /// Class for reading Messages from TCP server in, where message is binary array. 
+    /// </summary> 
     abstract internal class BinaryLineReader
     {
         /// <summary>
-        /// Class for reading Messages from TCP server in, where message is binary array. 
+        /// Dictionary with all readers for reading from binary messages.
         /// </summary>
-        /// 
         internal static readonly Dictionary<string, BinaryLineReader> AllLineReaders = CreateAllReaders();
 
+        /// <summary>
+        /// Constants offsets for parsing lines.
+        /// </summary>
         protected const ushort TYPENAME_SIZE = 3;
         protected const ushort LENGTH_SIZE = 4;
         protected const ushort OFFSET_SIZE = TYPENAME_SIZE + LENGTH_SIZE;
+
+        /// <summary>
+        /// Public static method for finding type identificator, size of a message and array of bytes.
+        /// </summary>
+        /// <param name="msg">Message from server</param>
+        /// <returns>
+        /// Item1: string, that contains type identificator.
+        /// Item2: uint, that contains a size in bytes of message.
+        /// Item3: byte[], array of bytes from message.
+        /// </returns>
         public static (string, uint, byte[]) ReadSizeAndType(Message msg)
         {
             byte[] bytes = msg.MessageBytes;
@@ -51,6 +66,9 @@ namespace ProjOb_project.LineReaders
             return res;
         }
 
+        /// <summary>
+        /// Dictionary that converts type identifiers from message to type identifiers from Factories.
+        /// </summary>
         private static Dictionary<string, string> TypeIdentifiersDictionary = new Dictionary<string, string>
         {
             { "NCR", "C"},

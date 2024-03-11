@@ -28,6 +28,9 @@ namespace ProjOb_project.Items
         private ulong _planeAsId;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public Plane? Plane { get; set; } = null;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public ulong PlaneAsId
         {
             get { return _planeAsId; }

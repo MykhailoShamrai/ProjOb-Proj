@@ -2,6 +2,9 @@
 
 namespace ProjOb_project
 {
+    /// <summary>
+    /// Static database class with Dictionaries for each type of objects (ItemParsable) and one List for all created objects.
+    /// </summary>
     internal static class Database
     {
         static public List<ItemParsable> AllObjects { get; set; } = new List<ItemParsable>();

@@ -10,6 +10,12 @@ namespace ProjOb_project.LineReaders
 {
     internal class AirportLineReader: BinaryLineReader
     {
+        /// <summary>
+        /// Overriden method for returning sting array for Airport object with parameters in good order for FactoryMethod.
+        /// </summary>
+        /// <param name="size">Size of message</param>
+        /// <param name="tab">Array of bits of the message</param>
+        /// <returns></returns>
         public override string[] ReadFieldsFromMessage(uint size, byte[] tab)
         {
             ushort currentOffset = OFFSET_SIZE;

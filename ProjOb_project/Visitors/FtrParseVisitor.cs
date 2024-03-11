@@ -40,6 +40,7 @@ namespace ProjOb_project.Visitors
             }
             if (Database.DictionaryForPassangerPlane.ContainsKey(flight.PlaneAsId))
             {
+                flight.Plane = Database.DictionaryForPassangerPlane[flight.PlaneAsId];
                 foreach (ulong loadId in flight.LoadAsId)
                 {
                     if (Database.DictionaryForPassanger.ContainsKey(loadId))
@@ -50,6 +51,7 @@ namespace ProjOb_project.Visitors
             }
             else if (Database.DictionaryForCargoPlane.ContainsKey(flight.PlaneAsId))
             {
+                flight.Plane = Database.DictionaryForCargoPlane[flight.PlaneAsId];
                 foreach (ulong loadId in flight.LoadAsId)
                 {
                     if (Database.DictionaryForCargo.ContainsKey(loadId))
