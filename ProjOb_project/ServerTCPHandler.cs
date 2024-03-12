@@ -83,19 +83,25 @@ namespace ProjOb_project
         /// </summary>
         private void ReadBinary()
         {
+            Message msg;
             while (true)
             {
                 lock (_queueLock)
                 {
                     if (_messageQueue.Count > 0)
                     {
-                        (string, uint, byte[]) typeAndByte = BinaryLineReader.ReadSizeAndType(_messageQueue.Dequeue());
-                        string[] fieldVars = BinaryLineReader.AllLineReaders[typeAndByte.Item1].ReadFieldsFromMessage(typeAndByte.Item2, typeAndByte.Item3);
-                        lock (_serializationLock)
-                        {
-                            Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
-                        }
+                        msg = _messageQueue.Dequeue();
                     }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                (string, uint, byte[]) typeAndByte = BinaryLineReader.ReadSizeAndType(msg);
+                string[] fieldVars = BinaryLineReader.AllLineReaders[typeAndByte.Item1].ReadFieldsFromMessage(typeAndByte.Item2, typeAndByte.Item3);
+                lock (_serializationLock)
+                {
+                   Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
                 }
             }
         }
