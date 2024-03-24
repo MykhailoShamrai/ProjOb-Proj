@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Mapsui.Projections;
 using Mapsui.Providers.Wfs.Utilities;
 using ProjOb_project.Items;
 
@@ -27,21 +28,32 @@ namespace ProjOb_project.GUI
             double latitudeDif;
             double longtitudeDif;
             Flight flight = flights[index];
+            Airport origin = flight.OriginAirport!;
+            Airport target = flight.TargetAirport!;
             DateTime takeOffTime = DateTime.Parse(flight.TakeOffTime);
             DateTime landingTime = DateTime.Parse(flight.LandingTime);
             DateTime now = DateTime.Now;                  
+            
             double currentSeconds = (now - takeOffTime).TotalSeconds;
             double amountOfSeconds = (landingTime - takeOffTime).TotalSeconds;
-            latitudeDif = flight.TargetAirport!.Latitude - flight.OriginAirport!.Latitude;
-            longtitudeDif = flight.TargetAirport!.Longtitude - flight.OriginAirport!.Longtitude;
-            double curLong = (flight.OriginAirport.Longtitude * (amountOfSeconds - currentSeconds) + flight.TargetAirport.Longtitude * (currentSeconds)) / amountOfSeconds;
-            double curLat = (flight.OriginAirport.Latitude * (amountOfSeconds - currentSeconds) + flight.TargetAirport.Latitude * (currentSeconds)) / amountOfSeconds;
+
+            latitudeDif = target.Latitude - origin.Latitude;
+            longtitudeDif = target.Longtitude - origin.Longtitude;
+            double curLong = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Longtitude, target.Longtitude, currentSeconds);
+            double curLat = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Latitude, target.Latitude, currentSeconds);
             return new WorldPosition(curLat, curLong);
         }
 
         public override double GetRotation(int index)
         {
-            return 0;
+            Flight flight = flights[index];
+            Airport origin = flight.OriginAirport!;
+            Airport target = flight.TargetAirport!;
+            (double originX, double originY) = SphericalMercator.FromLonLat(origin.Longtitude, origin.Latitude);
+            (double targetX, double targetY) = SphericalMercator.FromLonLat(target.Longtitude, target.Latitude);
+            double distanceX = targetX - originX;
+            double distanceY = targetY - originY;
+            return Math.Atan2(distanceX, distanceY);
         }
     }
 }

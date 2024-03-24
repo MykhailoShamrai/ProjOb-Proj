@@ -5,6 +5,7 @@ using ProjOb_project.Items;
 using ProjOb_project.Parsers;
 using ProjOb_project.Visitors;
 using System.Reflection.Metadata;
+using ProjOb_project.TCPServer;
 
 namespace ProjOb_project
 {
@@ -12,31 +13,15 @@ namespace ProjOb_project
     {
         static void Main(string[] args)
         {
-            //ServerTCPHandler handler = ServerTCPHandler.getInstance();
-            //ConsoleService service = ConsoleService.getInstance();
-            //handler.Run();
-            //service.ReadFromConsole();
-
+            ConsoleService cs = ConsoleService.getInstance();
             List<ItemParsable> items;
             items = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
 
-            Thread thread = new Thread(()=>Runner.Run());
-            thread.IsBackground = true;
-            thread.Start();
+            GUIHandler.StartGUI();
+            GUIHandler.StartUpdatingGUI();
 
-            FlightGuiDataAdapter adapter = new FlightGuiDataAdapter();
-
-            while(true) 
-            {
-                Thread.Sleep(1000);
-                GUIHandler.ActualiseFlights(DateTime.Now);
-                Runner.UpdateGUI(adapter);
-            }
+            cs.ReadFromConsole();
         }
-        //public void Start()
-       // {
-        //    Runner.Run();
-        //}
     }
 
 }

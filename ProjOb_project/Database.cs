@@ -7,6 +7,9 @@ namespace ProjOb_project
     /// </summary>
     internal static class Database
     {
+        /// <summary>
+        /// Objects for locking objects in database class for multithread using.
+        /// </summary>
         public static readonly object AllObjectsLock = new object();
         public static readonly object DictionaryForPassangerPlaneLock = new object();
         public static readonly object DictionaryForPassangerLock = new object();

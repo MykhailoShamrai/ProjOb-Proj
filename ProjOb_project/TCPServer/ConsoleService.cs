@@ -43,7 +43,7 @@
         /// <summary>
         /// Invoking a PrintEvent event.
         /// </summary>
-        public void OnPrintEvent()
+        private void OnPrintEvent()
         {
             PrintEvent?.Invoke();
         }
@@ -51,7 +51,7 @@
         /// <summary>
         /// Invokin a OnExitvent event.
         /// </summary>
-        public void OnExitEvent()
+        private void OnExitEvent()
         {
             ExitEvent?.Invoke();
         }

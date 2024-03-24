@@ -10,8 +10,8 @@ namespace ProjOb_project.TCPServer
 {
     internal class ServerTCPHandler
     {
-        const int MIN_OFFSET_MS = 10;
-        const int MAX_OFFSET_MS = 200;
+        const int MIN_OFFSET_MS = 2;
+        const int MAX_OFFSET_MS = 10;
 
         /// <summary>
         /// Variables for locking. _lockSingleton - locking variable for creating an instance of ServerTCPHandler. _queueLock - locking variable for locking a queue while adding a new message and creating a new 
@@ -52,7 +52,6 @@ namespace ProjOb_project.TCPServer
             _simulator = new NetworkSourceSimulator.NetworkSourceSimulator("example_data.ftr", MIN_OFFSET_MS, MAX_OFFSET_MS);
             _simulator.OnNewDataReady += AddMessage2Queue;
             _consoleService.PrintEvent += MakeASnapshot;
-            _consoleService.ExitEvent += MakeASnapshot;
         }
 
         /// <summary>
@@ -82,6 +81,7 @@ namespace ProjOb_project.TCPServer
         /// </summary>
         private void ReadBinary()
         {
+            FtrParseVisitor ftrParseVisitor = new FtrParseVisitor();
             Message msg;
             while (true)
             {
@@ -101,6 +101,10 @@ namespace ProjOb_project.TCPServer
                 lock (Database.AllObjectsLock)
                 {
                     Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
+                    foreach (var kvp in Database.AllObjects)
+                    {
+                        kvp.acceptVisitor(ftrParseVisitor);
+                    }
                 }
             }
         }
