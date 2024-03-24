@@ -11,7 +11,6 @@ namespace ProjOb_project.Items
     // Class for Passanger inherited from Person, Person inherited from ItemParsable
     internal class Passanger : Person, ILoadable
     {
-        static public int FieldsCount { get; set; } = 7;
         [JsonInclude]
         private string _class;
         [JsonInclude]

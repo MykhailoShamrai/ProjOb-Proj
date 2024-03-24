@@ -6,7 +6,7 @@ using ProjOb_project.Visitors;
 using System.Text;
 
 
-namespace ProjOb_project
+namespace ProjOb_project.TCPServer
 {
     internal class ServerTCPHandler
     {
@@ -19,7 +19,6 @@ namespace ProjOb_project
         /// </summary>
         private static readonly object _lockSingleton = new object();
         private readonly object _queueLock = new object();
-        private readonly object _serializationLock = new object();
 
         /// <summary>
         /// ConsoleService instance for adding event handling methods. 
@@ -99,9 +98,9 @@ namespace ProjOb_project
                 }
                 (string, uint, byte[]) typeAndByte = BinaryLineReader.ReadSizeAndType(msg);
                 string[] fieldVars = BinaryLineReader.AllLineReaders[typeAndByte.Item1].ReadFieldsFromMessage(typeAndByte.Item2, typeAndByte.Item3);
-                lock (_serializationLock)
+                lock (Database.AllObjectsLock)
                 {
-                   Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
+                    Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
                 }
             }
         }
@@ -119,7 +118,7 @@ namespace ProjOb_project
             sb.Append(tmp);
             sb.Append(".json");
             sb.Insert(0, "./Snapshots/");
-            lock (_serializationLock)
+            lock (Database.AllObjectsLock)
             {
                 Serializer.SerializeToFile(sb.ToString(), Database.AllObjects, new SerializerForJson());
                 foreach (var kvp in Database.AllObjects)

@@ -24,7 +24,10 @@ namespace ProjOb_project.Factories
             ulong[] crewAsId = Parser.ParseParam2UIntTab(parameters[9]);
             ulong[] loadAsId = Parser.ParseParam2UIntTab(parameters[10]);
             Flight tmp = new Flight(id, originAsId, targetAsId, takeOffTime, landingTime, coordinates.Item1, coordinates.Item2, coordinates.Item3, planeId, crewAsId, loadAsId);
-            Database.DictionaryForFlight.Add(id, tmp);
+            lock (Database.DictionaryForFlightLock)
+            {
+                Database.DictionaryForFlight.Add(id, tmp);
+            }
             return tmp;
         }
     }

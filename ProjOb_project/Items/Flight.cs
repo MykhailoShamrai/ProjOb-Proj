@@ -7,21 +7,61 @@ namespace ProjOb_project.Items
     // Class for Flights inherited from ItemParsable
     internal class Flight : ItemParsable, IJsonOnDeserialized
     {
-        static public int FieldsCount { get; set; } = 11;
         [JsonInclude]
         private ulong _id;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong Id
+        {
+            get { return _id; } 
+        }
         [JsonInclude]
         private ulong _originAsId;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong OriginAsId
+        {
+            get { return _originAsId; }
+        }
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public Airport? OriginAirport { get; set; } = null;
         [JsonInclude]
         private ulong _targetAsId;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong TargetAsId
+        {
+            get { return _targetAsId; }
+        }
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public Airport? TargetAirport { get; set; } = null;
         [JsonInclude]
         private string _takeOffTime;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string TakeOffTime
+        {
+            get { return _takeOffTime; }
+        }
         [JsonInclude]
         private string _landingTime;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string LandingTime
+        {
+            get { return _landingTime; }
+        }
         [JsonInclude]
         private float? _longtitude;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public float? Longtitude
+        {
+            get { return _longtitude; }
+            set {  _longtitude = value; }
+        }
         [JsonInclude]
         private float? _latitude;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public float? Latitude
+        {
+            get { return _latitude; }
+            set { _latitude = value; }
+        }
         [JsonInclude]
         private float? _amsl;
         [JsonInclude]

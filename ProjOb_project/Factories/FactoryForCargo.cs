@@ -19,7 +19,10 @@ namespace ProjOb_project.Factories
             string code = parameters[2];
             string descreption = parameters[3];
             Cargo tmp = new Cargo(id, weight, code, descreption);
-            Database.DictionaryForCargo.Add(id, tmp);
+            lock(Database.DictionaryForCargo)
+            {
+                Database.DictionaryForCargo.Add(id, tmp);
+            }
             return tmp;
         }
     }

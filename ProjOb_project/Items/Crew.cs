@@ -11,7 +11,6 @@ namespace ProjOb_project.Items
     // Class for Crew inherited from Person, Person inherited from ItemParsable
     internal class Crew : Person
     {
-        static public int FieldsCount { get; set; } = 7;
         [JsonInclude]
         private ushort _practise;
         [JsonInclude]

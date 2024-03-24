@@ -44,7 +44,10 @@ namespace ProjOb_project.Parsers
             {
                 parsable.acceptVisitor(visitor);
             }
-            Database.AllObjects.Concat(collection);
+            lock (Database.AllObjectsLock)
+            {
+                Database.AllObjects.Concat(collection);
+            }
             return collection;
         }
 

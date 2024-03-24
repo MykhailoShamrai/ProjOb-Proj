@@ -33,34 +33,56 @@ namespace ProjOb_project.Visitors
         /// <param name="flight">Flight object, on which is required linking objects from database</param>
         public override void visitFlight(Flight flight)
         {
-            foreach (ulong crewId in flight.CrewAsId)
+            lock(Database.DictionaryForCrewLock)
             {
-                if (Database.DictionaryForCrew.ContainsKey(crewId))
-                    flight.CrewList.Add(Database.DictionaryForCrew[crewId]);
-            }
-            if (Database.DictionaryForPassangerPlane.ContainsKey(flight.PlaneAsId))
-            {
-                flight.Plane = Database.DictionaryForPassangerPlane[flight.PlaneAsId];
-                foreach (ulong loadId in flight.LoadAsId)
+                foreach (ulong crewId in flight.CrewAsId)
                 {
-                    if (Database.DictionaryForPassanger.ContainsKey(loadId))
+                    if (Database.DictionaryForCrew.ContainsKey(crewId))
+                        flight.CrewList.Add(Database.DictionaryForCrew[crewId]);
+                }
+            }
+            lock (Database.DictionaryForPassangerPlaneLock) lock (Database.DictionaryForCargoPlaneLock)
+            { 
+                if (Database.DictionaryForPassangerPlane.ContainsKey(flight.PlaneAsId))
+                {
+                    flight.Plane = Database.DictionaryForPassangerPlane[flight.PlaneAsId];
+                    lock (Database.DictionaryForPassangerLock)
                     {
-                        flight.LoadList.Add(Database.DictionaryForPassanger[loadId]);
+                        foreach (ulong loadId in flight.LoadAsId)
+                        {
+                            if (Database.DictionaryForPassanger.ContainsKey(loadId))
+                            {
+                                flight.LoadList.Add(Database.DictionaryForPassanger[loadId]);
+                            }
+                        }
+                    }
+                }
+                else if (Database.DictionaryForCargoPlane.ContainsKey(flight.PlaneAsId))
+                {
+                    flight.Plane = Database.DictionaryForCargoPlane[flight.PlaneAsId];
+                    lock(Database.DictionaryForCargoLock)
+                    { 
+                        foreach (ulong loadId in flight.LoadAsId)
+                        {
+                            if (Database.DictionaryForCargo.ContainsKey(loadId))
+                            {
+                                flight.LoadList.Add(Database.DictionaryForCargo[loadId]);
+                            }
+                        }
                     }
                 }
             }
-            else if (Database.DictionaryForCargoPlane.ContainsKey(flight.PlaneAsId))
+            lock (Database.DictionaryForAirportLock)
             {
-                flight.Plane = Database.DictionaryForCargoPlane[flight.PlaneAsId];
-                foreach (ulong loadId in flight.LoadAsId)
+                if (Database.DictionaryForAirport.ContainsKey(flight.TargetAsId))
                 {
-                    if (Database.DictionaryForCargo.ContainsKey(loadId))
-                    {
-                        flight.LoadList.Add(Database.DictionaryForCargo[loadId]);
-                    }
+                    flight.TargetAirport = Database.DictionaryForAirport[flight.TargetAsId];
+                }
+                if (Database.DictionaryForAirport.ContainsKey(flight.OriginAsId))
+                {
+                    flight.OriginAirport = Database.DictionaryForAirport[flight.OriginAsId];
                 }
             }
-
         }
         public override void visitPassanger(Passanger passanger)
         {

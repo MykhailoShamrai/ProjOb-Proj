@@ -18,7 +18,10 @@ namespace ProjOb_project.Factories
             ushort businessClassSize = ushort.Parse(parameters[5]);
             ushort economyClassSize = ushort.Parse(parameters[6]);
             PassangerPlane tmp = new PassangerPlane(passangerPlanePlaneParams.Item1, passangerPlanePlaneParams.Item2, passangerPlanePlaneParams.Item3, passangerPlanePlaneParams.Item4, firstClassSize, businessClassSize, economyClassSize);
-            Database.DictionaryForPassangerPlane.Add(passangerPlanePlaneParams.Item1, tmp);
+            lock (Database.DictionaryForPassangerPlaneLock)
+            {
+                Database.DictionaryForPassangerPlane.Add(passangerPlanePlaneParams.Item1, tmp);
+            }
             return tmp;
         }
     }

@@ -17,7 +17,10 @@ namespace ProjOb_project.Factories
             (ulong, string, string, string) cargoPlaneParams = ParseForPlane(parameters[0..4]);
             float maxLoad = Parser.ParseStringWithDot2Float(parameters[4]);
             CargoPlane tmp = new CargoPlane(cargoPlaneParams.Item1, cargoPlaneParams.Item2, cargoPlaneParams.Item3, cargoPlaneParams.Item4, maxLoad);
-            Database.DictionaryForCargoPlane.Add(cargoPlaneParams.Item1, tmp);
+            lock (Database.DictionaryForCargoPlane)
+            {
+                Database.DictionaryForCargoPlane.Add(cargoPlaneParams.Item1, tmp);
+            }
             return tmp;
         }
     }

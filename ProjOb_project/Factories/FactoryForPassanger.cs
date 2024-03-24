@@ -17,7 +17,10 @@ namespace ProjOb_project.Factories
             string classType = parameters[5];
             ulong miles = ulong.Parse(parameters[6]);
             Passanger tmp = new Passanger(personParams.Item1, personParams.Item2, personParams.Item3, personParams.Item4, personParams.Item5, classType, miles);
-            Database.DictionaryForPassanger.Add(personParams.Item1, tmp);
+            lock (Database.DictionaryForPassangerLock)
+            {
+                Database.DictionaryForPassanger.Add(personParams.Item1, tmp);
+            }
             return tmp;
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace ProjOb_project
+﻿namespace ProjOb_project.TCPServer
 {
     internal class ConsoleService
     {

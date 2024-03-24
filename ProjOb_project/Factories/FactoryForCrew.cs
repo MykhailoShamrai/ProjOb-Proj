@@ -19,7 +19,10 @@ namespace ProjOb_project.Factories
             ushort practice = ushort.Parse(parameters[5]);
             string role = parameters[6];
             Crew tmp = new Crew(personParams.Item1, personParams.Item2, personParams.Item3, personParams.Item4, personParams.Item5, practice, role);
-            Database.DictionaryForCrew.Add(personParams.Item1, tmp);
+            lock (Database.DictionaryForCrewLock)
+            {
+                Database.DictionaryForCrew.Add(personParams.Item1, tmp);
+            }
             return tmp;
         }
     }

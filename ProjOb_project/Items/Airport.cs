@@ -11,8 +11,6 @@ namespace ProjOb_project.Items
     // Class for Airport inherited from ItemParsable
     internal class Airport : ItemParsable
     {
-        static public int FieldsCount { get; set; } = 7;
-
         [JsonInclude]
         private ulong _id;
         [JsonInclude]
@@ -20,11 +18,21 @@ namespace ProjOb_project.Items
         [JsonInclude]
         private string _code;
         [JsonInclude]
-        private float ?_longtitude;
+        private float? _longtitude;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public float Longtitude
+        {
+            get { return _longtitude ?? default(float); }
+        }
         [JsonInclude]
-        private float ?_latitude;
+        private float? _latitude;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public float Latitude
+        {
+            get { return _latitude ?? default(float); }
+        }
         [JsonInclude]
-        private float ?_amsl;
+        private float? _amsl;
         [JsonInclude]
         private string _countryIso;
 

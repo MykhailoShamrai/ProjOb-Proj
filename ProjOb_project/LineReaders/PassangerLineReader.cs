@@ -9,6 +9,7 @@ namespace ProjOb_project.LineReaders
 {
     internal class PassangerLineReader: BinaryLineReader
     {
+        static private int FieldsCount = 7;
         /// <summary>
         /// Overriden method for returning sting array for Passanger object with parameters in good order for FactoryMethod.
         /// </summary>
@@ -18,7 +19,7 @@ namespace ProjOb_project.LineReaders
         public override string[] ReadFieldsFromMessage(uint size, byte[] tab)
         {
             ushort currentOffset = OFFSET_SIZE;
-            string[] fields = new string[Passanger.FieldsCount];
+            string[] fields = new string[FieldsCount];
             ulong Id = BitConverter.ToUInt64(tab, currentOffset);
             fields[0] = Id.ToString();
             currentOffset += sizeof(ulong);

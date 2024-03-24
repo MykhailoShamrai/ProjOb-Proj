@@ -19,7 +19,10 @@ namespace ProjOb_project.Factories
             (float?, float?, float?) coordinates = ParseCoordinates(parameters[3..6]);
             string countryIso = parameters[6];
             Airport tmp = new Airport(id, name, code, coordinates.Item1, coordinates.Item2, coordinates.Item3, countryIso);
-            Database.DictionaryForAirport.Add(id, tmp);
+            lock (Database.DictionaryForAirportLock)
+            {
+                Database.DictionaryForAirport.Add(id, tmp);
+            }
             return tmp;
         }
     }

@@ -9,6 +9,7 @@ namespace ProjOb_project.LineReaders
 {
     internal class FlightLineReader: BinaryLineReader
     {
+        static private int FieldsCount = 11;
         /// <summary>
         /// Overriden method for returning sting array for Flight object with parameters in good order for FactoryMethod. Fields _longtitude, _latitude, _amsl will be null, because there are no data in Messages.
         /// </summary>
@@ -18,7 +19,7 @@ namespace ProjOb_project.LineReaders
         public override string[] ReadFieldsFromMessage(uint size, byte[] tab)
         {
             ushort currentOffset = OFFSET_SIZE;
-            string[] fields = new string[Flight.FieldsCount];
+            string[] fields = new string[FieldsCount];
             ulong Id = BitConverter.ToUInt64(tab, currentOffset);
             currentOffset += sizeof(ulong);
             fields[0] = Id.ToString();
