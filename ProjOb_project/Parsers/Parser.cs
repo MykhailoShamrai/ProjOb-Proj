@@ -46,7 +46,7 @@ namespace ProjOb_project.Parsers
             }
             lock (Database.AllObjectsLock)
             {
-                Database.AllObjects.Concat(collection);
+               Database.AllObjects =  Database.AllObjects.Concat(collection).ToList();
             }
             return collection;
         }

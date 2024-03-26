@@ -16,6 +16,7 @@ namespace ProjOb_project
             ConsoleService cs = ConsoleService.getInstance();
             List<ItemParsable> items;
             items = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
+            ServerTCPHandler handler = ServerTCPHandler.getInstance();
 
             GUIHandler.StartGUI();
             GUIHandler.StartUpdatingGUI();

@@ -41,6 +41,8 @@ namespace ProjOb_project.GUI
             longtitudeDif = target.Longtitude - origin.Longtitude;
             double curLong = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Longtitude, target.Longtitude, currentSeconds);
             double curLat = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Latitude, target.Latitude, currentSeconds);
+            flight.Latitude = (float)curLat;
+            flight.Longtitude = (float)curLong;
             return new WorldPosition(curLat, curLong);
         }
 
