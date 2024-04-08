@@ -15,6 +15,11 @@ namespace ProjOb_project.Items
         private ulong _id;
         [JsonInclude]
         private string _serial;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Serial
+        {
+            get { return _serial; }
+        }
         [JsonInclude]
         private string _countryIso;
         [JsonInclude]

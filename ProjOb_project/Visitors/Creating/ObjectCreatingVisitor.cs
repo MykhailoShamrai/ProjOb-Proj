@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjOb_project.Visitors
+namespace ProjOb_project.Visitors.Creating
 {
     /// <summary>
     /// Abstract class using visitor pattern for parsing ItemParsable objects from files
     /// </summary>
 
-    abstract internal class Visitor
+    internal interface ObjectCreatingVisitor
     {
         abstract public void visitAirport(Airport airport);
         abstract public void visitCargo(Cargo cargo);

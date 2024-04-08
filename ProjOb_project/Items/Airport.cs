@@ -1,4 +1,4 @@
-﻿using ProjOb_project.Visitors;
+﻿using ProjOb_project.Visitors.Creating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,11 @@ namespace ProjOb_project.Items
         private ulong _id;
         [JsonInclude]
         private string _name;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Name
+        {
+            get { return _name; }
+        }
         [JsonInclude]
         private string _code;
         [JsonInclude]
@@ -47,7 +52,7 @@ namespace ProjOb_project.Items
             this._countryIso = _countryIso;
         }
 
-        public override void acceptVisitor(Visitor visitor)
+        public override void acceptVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitAirport(this);
         }

@@ -1,4 +1,4 @@
-﻿using ProjOb_project.Visitors;
+﻿using ProjOb_project.Visitors.Creating;
 using System.Text.Json.Serialization;
 
 
@@ -125,7 +125,7 @@ namespace ProjOb_project.Items
             this._loadAsId = _loadAsId;
         }
 
-        public override void acceptVisitor(Visitor visitor)
+        public override void acceptVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitFlight(this);
         }

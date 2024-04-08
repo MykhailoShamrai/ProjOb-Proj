@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjOb_project.Items;
 using ProjOb_project.Factories;
-using ProjOb_project.Visitors;
+using ProjOb_project.Visitors.Creating;
 
 namespace ProjOb_project.Parsers
 {
@@ -20,7 +20,7 @@ namespace ProjOb_project.Parsers
         // Static method for reading objects from file. Method returns list of ItemParsable objects. Each object is created by FactoryForParsable object in dictionary dictWithFactories,
         // which contains every Factory. Method require as a parameters string which contains filename. Second parameter is Parser object with 
         // apropriate to file type parser.
-        static public List<ItemParsable> ReadFromFile(string filename, Parser parser, Visitor visitor)
+        static public List<ItemParsable> ReadFromFile(string filename, Parser parser, ObjectCreatingVisitor visitor)
         {
             List<ItemParsable> collection = new List<ItemParsable>();
             //Dictionary<string, FactoryForParsable> dictWithFactories = FactoryForParsable.CreateAllFactories();

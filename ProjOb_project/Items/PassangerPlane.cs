@@ -1,4 +1,4 @@
-﻿using ProjOb_project.Visitors;
+﻿using ProjOb_project.Visitors.Creating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace ProjOb_project.Items
             this._economyClassSize = _economyClassSize;
         }
 
-        public override void acceptVisitor(Visitor visitor)
+        public override void acceptVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitPassangerPlane(this);
         }
