@@ -40,6 +40,11 @@ namespace ProjOb_project.Items
         private float? _amsl;
         [JsonInclude]
         private string _countryIso;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Country
+        {
+            get { return _countryIso; }
+        }
 
         public Airport(ulong _id, string _name, string _code, float? _longtitude, float? _latitude, float? _amsl, string _countryIso)
         {

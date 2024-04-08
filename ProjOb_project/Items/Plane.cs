@@ -24,6 +24,11 @@ namespace ProjOb_project.Items
         private string _countryIso;
         [JsonInclude]
         private string _model;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Model
+        {
+            get { return _model; }
+        }
 
         public Plane(ulong _id, string _serial, string _countryIso, string _model)
         {
