@@ -125,7 +125,7 @@ namespace ProjOb_project.Items
             this._loadAsId = _loadAsId;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitFlight(this);
         }
@@ -135,7 +135,7 @@ namespace ProjOb_project.Items
         /// </summary>
         public void OnDeserialized()
         {
-            acceptVisitor(new FtrParseVisitor());
+            acceptCreatingVisitor(new FtrParseVisitor());
         }
     }
 }

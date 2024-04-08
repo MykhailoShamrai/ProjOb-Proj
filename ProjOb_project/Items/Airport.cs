@@ -1,4 +1,5 @@
 ﻿using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Airport inherited from ItemParsable
-    internal class Airport : ItemParsable
+    internal class Airport : ItemParsable, IReportable
     {
         [JsonInclude]
         private ulong _id;
@@ -57,9 +58,19 @@ namespace ProjOb_project.Items
             this._countryIso = _countryIso;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitAirport(this);
+        }
+
+        /// <summary>
+        /// Accepting a visitor for reporting.
+        /// </summary>
+        /// <param name="visitor">ImediaVisitor visitor object</param>
+        /// <returns>visitor returns suitable string</returns>
+        public string acceptMediaVisitor(IMediaVisitor visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }

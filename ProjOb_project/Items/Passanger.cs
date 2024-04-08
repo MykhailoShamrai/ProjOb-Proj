@@ -23,7 +23,7 @@ namespace ProjOb_project.Items
             this._miles = _miles;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitPassanger(this);
         }

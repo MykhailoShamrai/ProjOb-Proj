@@ -103,7 +103,7 @@ namespace ProjOb_project.TCPServer
                     Database.AllObjects.Add(FactoryForParsable.AllFactoriesDictionary[typeAndByte.Item1].CreateParsable(fieldVars));
                     foreach (var kvp in Database.AllObjects)
                     {
-                        kvp.acceptVisitor(ftrParseVisitor);
+                        kvp.acceptCreatingVisitor(ftrParseVisitor);
                     }
                 }
             }
@@ -127,7 +127,7 @@ namespace ProjOb_project.TCPServer
                 Serializer.SerializeToFile(sb.ToString(), Database.AllObjects, new SerializerForJson());
                 foreach (var kvp in Database.AllObjects)
                 {
-                    kvp.acceptVisitor(ftrParseVisitor);
+                    kvp.acceptCreatingVisitor(ftrParseVisitor);
                 }
             }
         }

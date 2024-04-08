@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project.Visitors.Media
 {
-    internal interface MediaVisitor
+    /// <summary>
+    /// Visitor interface for returning media messages.
+    /// </summary>
+    internal interface IMediaVisitor
     {
         public string Name { get; set; }
 

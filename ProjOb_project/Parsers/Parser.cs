@@ -42,7 +42,7 @@ namespace ProjOb_project.Parsers
             // Linking all objects from arrays of uint to lists of required objects in flights
             foreach(ItemParsable parsable in collection)
             {
-                parsable.acceptVisitor(visitor);
+                parsable.acceptCreatingVisitor(visitor);
             }
             lock (Database.AllObjectsLock)
             {

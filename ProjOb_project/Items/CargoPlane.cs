@@ -1,4 +1,5 @@
 ﻿using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Cargo Plane inherited from Plane, and Plane inherited from ItemParsable
-    internal class CargoPlane : Plane
+    internal class CargoPlane: Plane, IReportable
     {
         [JsonInclude]
         private float _maxLoad;
@@ -20,9 +21,19 @@ namespace ProjOb_project.Items
             this._maxLoad = _maxLoad;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitCargoPlane(this);
+        }
+
+        /// <summary>
+        /// Accepting a visitor for reporting.
+        /// </summary>
+        /// <param name="visitor">IMediaVisitor visitor object</param>
+        /// <returns>visitor returns suitable string</returns>
+        public string acceptMediaVisitor(IMediaVisitor visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }

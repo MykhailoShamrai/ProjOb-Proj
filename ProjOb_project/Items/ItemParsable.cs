@@ -20,6 +20,6 @@ namespace ProjOb_project.Items
     // Abstract class for all objects that can be readable from files, like .ftr files
     abstract internal class ItemParsable
     {
-        abstract public void acceptVisitor(ObjectCreatingVisitor visitor);
+        abstract public void acceptCreatingVisitor(ObjectCreatingVisitor visitor);
     }
 }

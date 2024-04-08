@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project.Visitors.Media
 {
-    internal class Newspaper: MediaVisitor
+    internal class Newspaper: IMediaVisitor
     {
         public string Name { get; set; }
         public Newspaper(string name)

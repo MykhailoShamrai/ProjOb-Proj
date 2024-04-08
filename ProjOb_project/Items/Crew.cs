@@ -23,7 +23,7 @@ namespace ProjOb_project.Items
             this._role = _role;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitCrew(this);
         }

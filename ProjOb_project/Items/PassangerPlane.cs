@@ -1,4 +1,5 @@
 ﻿using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Passanger Plane inherited from Plane, Plane inherited from ItemParsable
-    internal class PassangerPlane : Plane
+    internal class PassangerPlane : Plane, IReportable
     {
         [JsonInclude]
         private ushort _firstClassSize;
@@ -27,9 +28,19 @@ namespace ProjOb_project.Items
             this._economyClassSize = _economyClassSize;
         }
 
-        public override void acceptVisitor(ObjectCreatingVisitor visitor)
+        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitPassangerPlane(this);
+        }
+
+        /// <summary>
+        /// Accepting a visitor for reporting.
+        /// </summary>
+        /// <param name="visitor">ImediaVisitor visitor object</param>
+        /// <returns>visitor returns suitable string</returns>
+        public string acceptMediaVisitor(IMediaVisitor visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }
