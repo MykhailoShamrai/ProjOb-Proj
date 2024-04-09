@@ -14,18 +14,26 @@ namespace ProjOb_project
         public List<IMediaVisitor> Visitors
         { get; }
 
-        public List<IReportable> Objects
+        public List<IReportable> ReportableItems
         { get; }
 
+        /// <summary>
+        /// Queue for cartesian product of IMediaVisitor objects and IReportable object 
+        /// </summary>
         public Queue<(IMediaVisitor, IReportable)> CrossJoinQueue
         { get; }
 
+        /// <summary>
+        /// Contructor for NewsGenerator, that creates also CrossJoinQueue
+        /// </summary>
+        /// <param name="visitors">List of IMediaVisitor objects for which generation of news is required</param>
+        /// <param name="objects">List of IReportable objects for which generation of news is required</param>
         public NewsGenerator(List<IMediaVisitor> visitors, List<IReportable> objects)
         {
             Visitors = visitors;
-            Objects = objects;
+            ReportableItems = objects;
             CrossJoinQueue = new Queue<(IMediaVisitor, IReportable)>(visitors.Count * objects.Count);
-            
+
             foreach (IReportable obj in objects)
             {
                 foreach (IMediaVisitor visitor in Visitors)
@@ -35,10 +43,12 @@ namespace ProjOb_project
             }
         }
 
-
+        /// <summary>
+        /// Mrthod for generating news from CrossJoinQueue. 
+        /// </summary>
+        /// <returns>If news was created, string will be returne. Otherwise null will be passed</returns>
         public string? GenerateNextNews()
         {
-            //string? report = null;
             (IMediaVisitor, IReportable) current;
 
             try

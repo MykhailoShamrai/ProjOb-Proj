@@ -1,6 +1,7 @@
 ﻿using ProjOb_project.Items;
 using ProjOb_project.Visitors.Media;
 
+
 namespace ProjOb_project.TCPServer
 {
     internal class ConsoleService
@@ -55,7 +56,7 @@ namespace ProjOb_project.TCPServer
         }
 
         /// <summary>
-        /// Invokin a OnExitvent event.
+        /// Invoking a OnExitvent event.
         /// </summary>
         private void OnExitEvent()
         {
@@ -67,6 +68,9 @@ namespace ProjOb_project.TCPServer
             ReportEvent?.Invoke();
         }
 
+        /// <summary>
+        /// Method for writing a report about all IReportable objects. 
+        /// </summary>
         private void WriteReport()
         {
             List<IMediaVisitor> visitorsList = new List<IMediaVisitor>
