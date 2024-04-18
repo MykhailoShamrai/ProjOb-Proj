@@ -1,11 +1,12 @@
-﻿using ProjOb_project.Visitors.Creating;
+﻿using ProjOb_project.Items.Listeners;
+using ProjOb_project.Visitors.Creating;
 using System.Text.Json.Serialization;
 
 
 namespace ProjOb_project.Items
 {
     // Class for Flights inherited from ItemParsable
-    internal class Flight : ItemParsable, IJsonOnDeserialized
+    internal class Flight : ItemParsable, IJsonOnDeserialized, IListenerID
     {
         [JsonInclude]
         private ulong _originAsId;
@@ -129,6 +130,31 @@ namespace ProjOb_project.Items
         public void OnDeserialized()
         {
             acceptCreatingVisitor(new FtrParseVisitor());
+        }
+
+        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        {
+            ulong old_id = args.ObjectID;
+            ulong new_id = args.NewObjectID;
+            if (_id == old_id)
+            {
+                lock (Database.AllObjectsLock)
+                {
+                    foreach (ItemParsable item in Database.AllObjects)
+                    {
+                        if (new_id == item.Id)
+                        {
+                            return;
+                        }
+                    }
+                    Id = new_id;
+                    lock (Database.DictionaryForFlightLock)
+                    {
+                        Database.DictionaryForFlight.Remove(old_id);
+                        Database.DictionaryForFlight.Add(new_id, this);
+                    }
+                }
+            }
         }
     }
 }

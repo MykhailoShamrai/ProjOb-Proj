@@ -1,4 +1,5 @@
-﻿using ProjOb_project.Visitors.Creating;
+﻿using ProjOb_project.Items.Listeners;
+using ProjOb_project.Visitors.Creating;
 using ProjOb_project.Visitors.Media;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Cargo Plane inherited from Plane, and Plane inherited from ItemParsable
-    internal class CargoPlane: Plane, IReportable
+    internal class CargoPlane: Plane, IReportable, IListenerID
     {
         [JsonInclude]
         private float _maxLoad;
@@ -34,6 +35,31 @@ namespace ProjOb_project.Items
         public string acceptMediaVisitor(IMediaVisitor visitor)
         {
             return visitor.Visit(this);
+        }
+
+        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        {
+            ulong old_id = args.ObjectID;
+            ulong new_id = args.NewObjectID;
+            if (_id == old_id)
+            {
+                lock (Database.AllObjectsLock)
+                {
+                    foreach (ItemParsable item in Database.AllObjects)
+                    {
+                        if (new_id == item.Id)
+                        {
+                            return;
+                        }
+                    }
+                    Id = new_id;
+                    lock (Database.DictionaryForAirportLock)
+                    {
+                        Database.DictionaryForCargoPlane.Remove(old_id);
+                        Database.DictionaryForCargoPlane.Add(new_id, this);
+                    }
+                }
+            }
         }
     }
 }

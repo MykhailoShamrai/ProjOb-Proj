@@ -9,14 +9,14 @@ namespace ProjOb_project.Publishers
 {
     internal class OnIDPublisher
     {
-        private Dictionary<int, IListenerID> _listeners = new Dictionary<int, IListenerID>();
+        private Dictionary<ulong, IListenerID> _listeners = new Dictionary<ulong, IListenerID>();
 
-        public void Subscribe(int id, IListenerID listener)
+        public void Subscribe(ulong id, IListenerID listener)
         {
             _listeners.Add(id, listener);
         }
 
-        public void Notify(NetworkSourceSimulator.IDUpdateArgs args)
+        public void Notify(object sender, NetworkSourceSimulator.IDUpdateArgs args)
         {
             foreach (var listener in _listeners.Values)
             {

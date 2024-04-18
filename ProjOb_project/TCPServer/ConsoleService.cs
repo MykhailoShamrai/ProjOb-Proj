@@ -96,6 +96,7 @@ namespace ProjOb_project.TCPServer
         {
             while (true)
             {
+                
                 switch (Console.ReadLine()!)
                 {
                     case "print":

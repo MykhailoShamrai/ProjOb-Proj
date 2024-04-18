@@ -12,8 +12,6 @@ namespace ProjOb_project.Items
     abstract internal class Person : ItemParsable
     {
         [JsonInclude]
-        private ulong _id;
-        [JsonInclude]
         private string _name;
         [JsonInclude]
         private ulong _age;

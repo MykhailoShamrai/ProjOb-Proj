@@ -18,8 +18,11 @@ namespace ProjOb_project
             ConsoleService cs = ConsoleService.getInstance();
             List<ItemParsable> items;
             EventManager events = new EventManager();
+
             items = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitorWithPublishers(events));
-            ServerTCPHandler handler = ServerTCPHandler.getInstance();
+
+            ServerTCPHandler handler = ServerTCPHandler.getInstance(events);
+            handler.Run();
 
             GUIHandler.StartGUI();
             GUIHandler.StartUpdatingGUI();

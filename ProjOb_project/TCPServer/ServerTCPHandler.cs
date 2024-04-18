@@ -1,6 +1,7 @@
 ﻿using NetworkSourceSimulator;
 using ProjOb_project.Factories;
 using ProjOb_project.LineReaders;
+using ProjOb_project.Publishers;
 using ProjOb_project.Serializers;
 using ProjOb_project.Visitors.Creating;
 using System.Text;
@@ -49,7 +50,7 @@ namespace ProjOb_project.TCPServer
             _thread_for_objects_creating = new Thread(ReadBinary);
             _thread_for_generating.IsBackground = true;
             _thread_for_objects_creating.IsBackground = true;
-            _simulator = new NetworkSourceSimulator.NetworkSourceSimulator("example_data.ftr", MIN_OFFSET_MS, MAX_OFFSET_MS);
+            _simulator = new NetworkSourceSimulator.NetworkSourceSimulator("example.ftre", MIN_OFFSET_MS, MAX_OFFSET_MS);
             _simulator.OnNewDataReady += AddMessage2Queue;
             _consoleService.PrintEvent += MakeASnapshot;
         }
@@ -59,7 +60,7 @@ namespace ProjOb_project.TCPServer
         /// </summary>
         /// <returns>Method returns an instance of type ServerTCPHandler, which is created only once regarding to singleton pattern</returns>
         // https://refactoring.guru/design-patterns/singleton/csharp/example#example-1
-        public static ServerTCPHandler getInstance()
+        public static ServerTCPHandler getInstance(EventManager? manaager = null)
         {
             if (_handler == null)
             {
@@ -68,11 +69,16 @@ namespace ProjOb_project.TCPServer
                     if (_handler == null)
                     {
                         _handler = new ServerTCPHandler();
+                        if (manaager != null)
+                        {
+                            _handler._simulator.OnIDUpdate += manaager.onIDPublisher.Notify;
+                        }
                     }
                 }
             }
             return _handler;
         }
+
 
 
         /// <summary>
