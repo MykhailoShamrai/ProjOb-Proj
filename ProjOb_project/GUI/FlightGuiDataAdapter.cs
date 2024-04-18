@@ -25,22 +25,15 @@ namespace ProjOb_project.GUI
 
         public override WorldPosition GetPosition(int index)
         {
-            double latitudeDif;
-            double longtitudeDif;
             Flight flight = flights[index];
-            Airport origin = flight.OriginAirport!;
-            Airport target = flight.TargetAirport!;
             DateTime takeOffTime = DateTime.Parse(flight.TakeOffTime);
             DateTime landingTime = DateTime.Parse(flight.LandingTime);
             DateTime now = DateTime.Now;                  
             
             double currentSeconds = (now - takeOffTime).TotalSeconds;
-            double amountOfSeconds = (landingTime - takeOffTime).TotalSeconds;
 
-            latitudeDif = target.Latitude - origin.Latitude;
-            longtitudeDif = target.Longtitude - origin.Longtitude;
-            double curLong = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Longtitude, target.Longtitude, currentSeconds);
-            double curLat = MathFunctions.LinearInterpolation(0, amountOfSeconds, origin.Latitude, target.Latitude, currentSeconds);
+            double curLong = flight.Longtitude!.Value + flight.LongtitudeDif;
+            double curLat = flight.Latitude!.Value + flight.LatitudeDif;
             flight.Latitude = (float)curLat;
             flight.Longtitude = (float)curLong;
             return new WorldPosition(curLat, curLong);

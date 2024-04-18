@@ -1,4 +1,6 @@
 ﻿using ProjOb_project.Items;
+using System;
+using System.Data;
 
 namespace ProjOb_project.Visitors.Creating
 {
@@ -74,13 +76,32 @@ namespace ProjOb_project.Visitors.Creating
                 }
             lock (Database.DictionaryForAirportLock)
             {
+                int flag = 0;
                 if (Database.DictionaryForAirport.ContainsKey(flight.TargetAsId))
                 {
                     flight.TargetAirport = Database.DictionaryForAirport[flight.TargetAsId];
+                    flag++;
                 }
                 if (Database.DictionaryForAirport.ContainsKey(flight.OriginAsId))
                 {
                     flight.OriginAirport = Database.DictionaryForAirport[flight.OriginAsId];
+                    flag++;
+                }
+                if (flag == 2)
+                {
+                    double latitudeDif;
+                    double longtitudeDif;
+                    DateTime takeOffTime = DateTime.Parse(flight.TakeOffTime);
+                    DateTime landingTime = DateTime.Parse(flight.LandingTime);
+
+                    latitudeDif = flight.TargetAirport!.Latitude - flight.OriginAirport!.Latitude;
+                    longtitudeDif = flight.TargetAirport!.Longtitude - flight.OriginAirport!.Longtitude;
+
+                    if (takeOffTime < landingTime)
+                    {
+                        flight.LatitudeDif = latitudeDif/(landingTime - takeOffTime).TotalSeconds;
+                        flight.LongtitudeDif = longtitudeDif/(landingTime - takeOffTime).TotalSeconds;
+                    }
                 }
             }
         }

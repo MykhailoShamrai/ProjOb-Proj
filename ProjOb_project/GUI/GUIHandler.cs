@@ -81,9 +81,9 @@ namespace ProjOb_project.GUI
         /// </summary>
         static private void UpdateGUI()
         {
-            FlightGuiDataAdapter adapter = new FlightGuiDataAdapter();
             while (true)
             {
+                FlightGuiDataAdapter adapter = new FlightGuiDataAdapter();
                 Thread.Sleep(1000);
                 GUIHandler.ActualiseFlights(DateTime.Now);
                 Runner.UpdateGUI(adapter);

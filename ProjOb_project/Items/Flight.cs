@@ -104,6 +104,18 @@ namespace ProjOb_project.Items
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public List<ILoadable> LoadList { get; set; } = new List<ILoadable>();
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public double LatitudeDif
+        {
+            get; set;
+        }
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public double LongtitudeDif
+        {
+            get; set;
+        }
+
+
         public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float? _longtitude, float? _latitude, float? _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
         {
             this._id = _id;
