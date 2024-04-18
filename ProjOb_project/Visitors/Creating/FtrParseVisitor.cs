@@ -9,19 +9,19 @@ namespace ProjOb_project.Visitors.Creating
 
     internal class FtrParseVisitor : ObjectCreatingVisitor
     {
-        public void visitAirport(Airport airport)
+        virtual public void visitAirport(Airport airport)
         {
             return;
         }
-        public void visitCargo(Cargo cargo)
+        virtual public void visitCargo(Cargo cargo)
         {
             return;
         }
-        public void visitCargoPlane(CargoPlane cargoPlane)
+        virtual public void visitCargoPlane(CargoPlane cargoPlane)
         {
             return;
         }
-        public void visitCrew(Crew crew)
+        virtual public void visitCrew(Crew crew)
         {
             return;
         }
@@ -31,7 +31,7 @@ namespace ProjOb_project.Visitors.Creating
         /// where id is equal to flight parameters id (CrewId, LoadId)
         /// </summary>
         /// <param name="flight">Flight object, on which is required linking objects from database</param>
-        public void visitFlight(Flight flight)
+        virtual public void visitFlight(Flight flight)
         {
             lock (Database.DictionaryForCrewLock)
             {
@@ -84,11 +84,11 @@ namespace ProjOb_project.Visitors.Creating
                 }
             }
         }
-        public void visitPassanger(Passanger passanger)
+        virtual public void visitPassanger(Passanger passanger)
         {
             return;
         }
-        public void visitPassangerPlane(PassangerPlane passangerPlane)
+        virtual public void visitPassangerPlane(PassangerPlane passangerPlane)
         {
             return;
         }

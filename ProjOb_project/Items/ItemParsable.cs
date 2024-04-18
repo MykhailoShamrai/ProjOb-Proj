@@ -20,6 +20,14 @@ namespace ProjOb_project.Items
     // Abstract class for all objects that can be readable from files, like .ftr files
     abstract internal class ItemParsable
     {
+        [JsonInclude]
+        protected ulong _id;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         abstract public void acceptCreatingVisitor(ObjectCreatingVisitor visitor);
     }
 }

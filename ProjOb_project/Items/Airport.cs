@@ -1,4 +1,5 @@
-﻿using ProjOb_project.Visitors.Creating;
+﻿using ProjOb_project.Items.Listeners;
+using ProjOb_project.Visitors.Creating;
 using ProjOb_project.Visitors.Media;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,8 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Airport inherited from ItemParsable
-    internal class Airport : ItemParsable, IReportable
+    internal class Airport : ItemParsable, IReportable, IListenerID
     {
-        [JsonInclude]
-        private ulong _id;
         [JsonInclude]
         private string _name;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
@@ -71,6 +70,31 @@ namespace ProjOb_project.Items
         public string acceptMediaVisitor(IMediaVisitor visitor)
         {
             return visitor.Visit(this);
+        }
+
+        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        {
+            ulong old_id = args.ObjectID;
+            ulong new_id = args.NewObjectID;
+            if (_id == old_id)
+            {
+                lock (Database.AllObjectsLock)
+                {
+                    foreach(ItemParsable item  in Database.AllObjects)
+                    {
+                        if (new_id == item.Id)
+                        {
+                            return;
+                        }
+                    }
+                    Id = new_id;
+                    lock (Database.DictionaryForAirportLock)
+                    {
+                        Database.DictionaryForAirport.Remove(old_id);
+                        Database.DictionaryForAirport.Add(new_id, this);
+                    }
+                }
+            }
         }
     }
 }

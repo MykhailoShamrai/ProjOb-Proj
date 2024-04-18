@@ -12,8 +12,6 @@ namespace ProjOb_project.Items
     abstract internal class Plane : ItemParsable
     {
         [JsonInclude]
-        private ulong _id;
-        [JsonInclude]
         private string _serial;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public string Serial

@@ -7,6 +7,7 @@ using ProjOb_project.Visitors;
 using System.Reflection.Metadata;
 using ProjOb_project.TCPServer;
 using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Publishers;
 
 namespace ProjOb_project
 {
@@ -16,7 +17,8 @@ namespace ProjOb_project
         {
             ConsoleService cs = ConsoleService.getInstance();
             List<ItemParsable> items;
-            items = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitor());
+            EventManager events = new EventManager();
+            items = Parser.ReadFromFile("example_data.ftr", new FtrParser(), new FtrParseVisitorWithPublishers(events));
             ServerTCPHandler handler = ServerTCPHandler.getInstance();
 
             GUIHandler.StartGUI();

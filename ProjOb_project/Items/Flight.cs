@@ -8,13 +8,6 @@ namespace ProjOb_project.Items
     internal class Flight : ItemParsable, IJsonOnDeserialized
     {
         [JsonInclude]
-        private ulong _id;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public ulong Id
-        {
-            get { return _id; } 
-        }
-        [JsonInclude]
         private ulong _originAsId;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public ulong OriginAsId
