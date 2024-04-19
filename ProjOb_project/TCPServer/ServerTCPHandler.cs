@@ -11,8 +11,8 @@ namespace ProjOb_project.TCPServer
 {
     internal class ServerTCPHandler
     {
-        const int MIN_OFFSET_MS = 2;
-        const int MAX_OFFSET_MS = 10;
+        const int MIN_OFFSET_MS = 200;
+        const int MAX_OFFSET_MS = 300;
 
         /// <summary>
         /// Variables for locking. _lockSingleton - locking variable for creating an instance of ServerTCPHandler. _queueLock - locking variable for locking a queue while adding a new message and creating a new 
@@ -72,6 +72,7 @@ namespace ProjOb_project.TCPServer
                         if (manaager != null)
                         {
                             _handler._simulator.OnIDUpdate += manaager.onIDPublisher.Notify;
+                            _handler._simulator.OnPositionUpdate += manaager.onUpdatePositionPublisher.Notify;
                         }
                     }
                 }

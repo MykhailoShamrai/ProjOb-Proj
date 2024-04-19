@@ -52,7 +52,13 @@ namespace ProjOb_project.GUI
                         timeOfLanding = DateTime.Parse(flight.LandingTime);
                         if (IsActualFlight(timeOfActualisation, timeOfTakeOff, timeOfLanding))
                         {
+                            flight.IsCUrrentlyOnAir = true;
                             Database.CurrentFlightsList.Add(flight);
+                        }
+                        else
+                        {
+                            flight.IsCUrrentlyOnAir = false;
+                            Database.CurrentFlightsList.Remove(flight);
                         }
                     }
                 }

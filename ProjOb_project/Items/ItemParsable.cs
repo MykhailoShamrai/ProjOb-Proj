@@ -18,16 +18,17 @@ namespace ProjOb_project.Items
     [JsonDerivedType(typeof(CargoPlane), typeDiscriminator: "CP")]
 
     // Abstract class for all objects that can be readable from files, like .ftr files
-    abstract internal class ItemParsable
+    internal interface ItemParsable
     {
-        [JsonInclude]
-        protected ulong _id;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public ulong Id
         {
-            get { return _id; }
-            set { _id = value; }
+            get;
+            set;
         }
-        abstract public void acceptCreatingVisitor(ObjectCreatingVisitor visitor);
+        public void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
+        {
+            return;
+        }
     }
 }

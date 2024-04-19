@@ -20,7 +20,13 @@ namespace ProjOb_project.Publishers
         {
             foreach (var listener in _listeners.Values)
             {
-                listener.Update(args);
+                if (listener.Id == args.ObjectID)
+                {
+                    listener.Update(args); // Zrobić z wartością zwracaną, żeby sprawdzić, czy powiodło się czy nie
+                    _listeners.Remove(args.ObjectID);
+                    _listeners.Add(args.NewObjectID, listener);
+                    break;
+                }   
             }
         }
     }

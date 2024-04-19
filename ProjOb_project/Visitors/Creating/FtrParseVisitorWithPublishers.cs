@@ -46,6 +46,7 @@ namespace ProjOb_project.Visitors.Creating
         {
             base.visitFlight(flight);
             _eventManager.onIDPublisher.Subscribe(flight.Id, flight);
+            _eventManager.onUpdatePositionPublisher.Subscribe(flight.Id, flight);
         }
         override public void visitPassanger(Passanger passanger)
         {

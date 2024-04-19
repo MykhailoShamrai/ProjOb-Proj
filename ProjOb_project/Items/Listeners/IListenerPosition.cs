@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProjOb_project.Items.Listeners
 {
-    internal interface IListenerID: ItemParsable
+    internal interface IListenerPosition: ItemParsable
     {
-        public int Update(NetworkSourceSimulator.IDUpdateArgs args);
+        public int Update(NetworkSourceSimulator.PositionUpdateArgs args);
     }
 }

@@ -24,34 +24,32 @@ namespace ProjOb_project.Items
             this._miles = _miles;
         }
 
-        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
+        public void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitPassanger(this);
         }
 
-        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        public int Update(NetworkSourceSimulator.IDUpdateArgs args)
         {
             ulong old_id = args.ObjectID;
             ulong new_id = args.NewObjectID;
-            if (_id == old_id)
+            lock (Database.AllObjectsLock)
             {
-                lock (Database.AllObjectsLock)
+                foreach (ItemParsable item in Database.AllObjects)
                 {
-                    foreach (ItemParsable item in Database.AllObjects)
+                    if (new_id == item.Id)
                     {
-                        if (new_id == item.Id)
-                        {
-                            return;
-                        }
-                    }
-                    Id = new_id;
-                    lock (Database.DictionaryForPassangerLock)
-                    {
-                        Database.DictionaryForPassanger.Remove(old_id);
-                        Database.DictionaryForPassanger.Add(new_id, this);
+                        return -1;
                     }
                 }
+                Id = new_id;
+                lock (Database.DictionaryForPassangerLock)
+                {
+                    Database.DictionaryForPassanger.Remove(old_id);
+                    Database.DictionaryForPassanger.Add(new_id, this);
+                }
             }
+            return 0;
         }
     }
 }

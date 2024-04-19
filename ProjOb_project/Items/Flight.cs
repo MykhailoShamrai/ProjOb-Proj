@@ -6,8 +6,16 @@ using System.Text.Json.Serialization;
 namespace ProjOb_project.Items
 {
     // Class for Flights inherited from ItemParsable
-    internal class Flight : ItemParsable, IJsonOnDeserialized, IListenerID
+    internal class Flight : ItemParsable, IJsonOnDeserialized, IListenerID, IListenerPosition
     {
+        [JsonInclude]
+        private ulong _id;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         [JsonInclude]
         private ulong _originAsId;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
@@ -115,6 +123,12 @@ namespace ProjOb_project.Items
             get; set;
         }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public bool IsCUrrentlyOnAir
+        {
+            get; set;
+        }
+
 
         public Flight(ulong _id, ulong _originAsId, ulong _targetAsId, string _takeOffTime, string _landingTime, float? _longtitude, float? _latitude, float? _amsl, ulong _planeAsId, ulong[] _crewAsId, ulong[] _loadAsId)
         {
@@ -129,9 +143,10 @@ namespace ProjOb_project.Items
             this._planeAsId = _planeAsId;
             this._crewAsId = _crewAsId;
             this._loadAsId = _loadAsId;
+            IsCUrrentlyOnAir = false;
         }
 
-        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
+        public void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitFlight(this);
         }
@@ -144,29 +159,50 @@ namespace ProjOb_project.Items
             acceptCreatingVisitor(new FtrParseVisitor());
         }
 
-        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        public int Update(NetworkSourceSimulator.IDUpdateArgs args)
         {
             ulong old_id = args.ObjectID;
             ulong new_id = args.NewObjectID;
-            if (_id == old_id)
+            lock (Database.AllObjectsLock)
             {
-                lock (Database.AllObjectsLock)
+                foreach (ItemParsable item in Database.AllObjects)
                 {
-                    foreach (ItemParsable item in Database.AllObjects)
+                    if (new_id == item.Id)
                     {
-                        if (new_id == item.Id)
-                        {
-                            return;
-                        }
-                    }
-                    Id = new_id;
-                    lock (Database.DictionaryForFlightLock)
-                    {
-                        Database.DictionaryForFlight.Remove(old_id);
-                        Database.DictionaryForFlight.Add(new_id, this);
+                        return -1;
                     }
                 }
+                Id = new_id;
+                lock (Database.DictionaryForFlightLock)
+                {
+                    Database.DictionaryForFlight.Remove(old_id);
+                    Database.DictionaryForFlight.Add(new_id, this);
+                }
             }
+            return 0;
+        }
+        // Zdecydować się na moment tego, kiedy pozycja jest aktualisowana
+        public int Update(NetworkSourceSimulator.PositionUpdateArgs args)
+        {
+            ulong objId = args.ObjectID;
+            float longtitude = args.Longitude;
+            float latitude = args.Latitude;
+            float amsl = args.AMSL;
+            _amsl = amsl;
+            Latitude = latitude;
+            Longtitude = longtitude;
+
+            if (IsCUrrentlyOnAir)
+            {
+                double latitudeDif = TargetAirport!.Latitude - Latitude.Value;
+                double longtitudeDif = TargetAirport!.Longtitude - Longtitude.Value;
+                DateTime landingTime = DateTime.Parse(LandingTime);
+
+                LatitudeDif = latitudeDif / (landingTime - DateTime.Now).TotalSeconds;
+                LongtitudeDif = longtitudeDif / (landingTime - DateTime.Now).TotalSeconds;
+                return 0;
+            }
+            return -1;
         }
     }
 }

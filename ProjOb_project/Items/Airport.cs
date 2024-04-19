@@ -14,6 +14,14 @@ namespace ProjOb_project.Items
     internal class Airport : ItemParsable, IReportable, IListenerID
     {
         [JsonInclude]
+        private ulong _id;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public ulong Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+        [JsonInclude]
         private string _name;
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public string Name
@@ -48,7 +56,7 @@ namespace ProjOb_project.Items
 
         public Airport(ulong _id, string _name, string _code, float? _longtitude, float? _latitude, float? _amsl, string _countryIso)
         {
-            this._id = _id;
+            Id = _id;
             this._name = _name;
             this._code = _code;
             this._longtitude = _longtitude;
@@ -57,7 +65,7 @@ namespace ProjOb_project.Items
             this._countryIso = _countryIso;
         }
 
-        public override void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
+        public void acceptCreatingVisitor(ObjectCreatingVisitor visitor)
         {
             visitor.visitAirport(this);
         }
@@ -72,29 +80,27 @@ namespace ProjOb_project.Items
             return visitor.Visit(this);
         }
 
-        public void Update(NetworkSourceSimulator.IDUpdateArgs args)
+        public int Update(NetworkSourceSimulator.IDUpdateArgs args)
         {
             ulong old_id = args.ObjectID;
             ulong new_id = args.NewObjectID;
-            if (_id == old_id)
+            lock (Database.AllObjectsLock)
             {
-                lock (Database.AllObjectsLock)
+                foreach(ItemParsable item  in Database.AllObjects)
                 {
-                    foreach(ItemParsable item  in Database.AllObjects)
+                    if (new_id == item.Id)
                     {
-                        if (new_id == item.Id)
-                        {
-                            return;
-                        }
-                    }
-                    Id = new_id;
-                    lock (Database.DictionaryForAirportLock)
-                    {
-                        Database.DictionaryForAirport.Remove(old_id);
-                        Database.DictionaryForAirport.Add(new_id, this);
+                        return -1;
                     }
                 }
+                Id = new_id;
+                lock (Database.DictionaryForAirportLock)
+                {
+                    Database.DictionaryForAirport.Remove(old_id);
+                    Database.DictionaryForAirport.Add(new_id, this);
+                }
             }
+            return 0;
         }
     }
 }
