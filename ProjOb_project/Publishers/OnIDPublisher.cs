@@ -9,22 +9,21 @@ namespace ProjOb_project.Publishers
 {
     internal class OnIDPublisher
     {
-        private Dictionary<ulong, IListenerID> _listeners = new Dictionary<ulong, IListenerID>();
+        private List<IListenerID> _listeners = new List<IListenerID>();
 
-        public void Subscribe(ulong id, IListenerID listener)
+        public void Subscribe(IListenerID listener)
         {
-            _listeners.Add(id, listener);
+            _listeners.Add(listener);
         }
 
         public void Notify(object sender, NetworkSourceSimulator.IDUpdateArgs args)
         {
-            foreach (var listener in _listeners.Values)
+            foreach (var listener in _listeners)
             {
                 if (listener.Id == args.ObjectID)
                 {
-                    listener.Update(args); // Zrobić z wartością zwracaną, żeby sprawdzić, czy powiodło się czy nie
-                    _listeners.Remove(args.ObjectID);
-                    _listeners.Add(args.NewObjectID, listener);
+                    if (listener.Update(args) == 0)
+                    { }
                     break;
                 }   
             }

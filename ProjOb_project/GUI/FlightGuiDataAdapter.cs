@@ -42,10 +42,12 @@ namespace ProjOb_project.GUI
         public override double GetRotation(int index)
         {
             Flight flight = flights[index];
-            Airport origin = flight.OriginAirport!;
-            Airport target = flight.TargetAirport!;
-            (double originX, double originY) = SphericalMercator.FromLonLat(origin.Longtitude, origin.Latitude);
-            (double targetX, double targetY) = SphericalMercator.FromLonLat(target.Longtitude, target.Latitude);
+            double prevLongtitude = flight.Longtitude!.Value - flight.LongtitudeDif;
+            double curLongtitude = flight.Longtitude.Value;
+            double prevLatitude = flight.Latitude!.Value - flight.LatitudeDif;
+            double curLatitude = flight.Latitude.Value;
+            (double originX, double originY) = SphericalMercator.FromLonLat(prevLongtitude, prevLatitude);
+            (double targetX, double targetY) = SphericalMercator.FromLonLat(curLongtitude, curLatitude);
             double distanceX = targetX - originX;
             double distanceY = targetY - originY;
             return Math.Atan2(distanceX, distanceY);

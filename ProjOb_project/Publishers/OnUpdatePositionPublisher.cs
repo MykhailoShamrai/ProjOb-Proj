@@ -9,16 +9,16 @@ namespace ProjOb_project.Publishers
 {
     internal class OnUpdatePositionPublisher
     {
-        private Dictionary<ulong, IListenerPosition> _listeners = new Dictionary<ulong, IListenerPosition>();
+        private List<IListenerPosition> _listeners = new List<IListenerPosition>();
 
-        public void Subscribe(ulong id, IListenerPosition listener)
+        public void Subscribe(IListenerPosition listener)
         {
-            _listeners.Add(id, listener);
+            _listeners.Add(listener);
         }
 
         public void Notify(object sender, NetworkSourceSimulator.PositionUpdateArgs args)
         {
-            foreach (var listener in _listeners.Values)
+            foreach (var listener in _listeners)
             {
                 if (listener.Id == args.ObjectID)
                 {
