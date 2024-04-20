@@ -19,22 +19,23 @@ namespace ProjOb_project.Visitors.Creating
         override public void visitAirport(Airport airport)
         {
             base.visitAirport(airport);
-            _eventManager.onIDPublisher.Subscribe(airport);
+            _eventManager.OnIDPublisher.Subscribe(airport);
         }
         override public void visitCargo(Cargo cargo)
         {
             base.visitCargo(cargo);
-            _eventManager.onIDPublisher.Subscribe(cargo);
+            _eventManager.OnIDPublisher.Subscribe(cargo);
         }
         override public void visitCargoPlane(CargoPlane cargoPlane)
         {
             base.visitCargoPlane(cargoPlane);
-            _eventManager.onIDPublisher.Subscribe(cargoPlane);
+            _eventManager.OnIDPublisher.Subscribe(cargoPlane);
         }
         override public void visitCrew(Crew crew)
         {
             base.visitCrew(crew);
-            _eventManager.onIDPublisher.Subscribe(crew);
+            _eventManager.OnIDPublisher.Subscribe(crew);
+            _eventManager.OnContactInfoPublisher.Subscribe(crew);
         }
 
         /// <summary>
@@ -45,18 +46,19 @@ namespace ProjOb_project.Visitors.Creating
         override public void visitFlight(Flight flight)
         {
             base.visitFlight(flight);
-            _eventManager.onIDPublisher.Subscribe(flight);
-            _eventManager.onUpdatePositionPublisher.Subscribe(flight);
+            _eventManager.OnIDPublisher.Subscribe(flight);
+            _eventManager.OnUpdatePositionPublisher.Subscribe(flight);
         }
         override public void visitPassanger(Passanger passanger)
         {
             base.visitPassanger(passanger);
-            _eventManager.onIDPublisher.Subscribe(passanger);
+            _eventManager.OnIDPublisher.Subscribe(passanger);
+            _eventManager.OnContactInfoPublisher.Subscribe(passanger);
         }
         override public void visitPassangerPlane(PassangerPlane passangerPlane)
         {
             base.visitPassangerPlane(passangerPlane);
-            _eventManager.onIDPublisher.Subscribe(passangerPlane);
+            _eventManager.OnIDPublisher.Subscribe(passangerPlane);
         }
     }
 }

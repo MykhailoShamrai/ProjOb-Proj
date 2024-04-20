@@ -10,7 +10,8 @@ namespace ProjOb_project.Publishers
 {
     internal class EventManager
     {
-        public OnIDPublisher onIDPublisher = new OnIDPublisher();
-        public OnUpdatePositionPublisher onUpdatePositionPublisher = new OnUpdatePositionPublisher();
+        public OnIDPublisher OnIDPublisher = new OnIDPublisher();
+        public OnUpdatePositionPublisher OnUpdatePositionPublisher = new OnUpdatePositionPublisher();
+        public OnContactInfoPublisher OnContactInfoPublisher = new OnContactInfoPublisher();
     }
 }

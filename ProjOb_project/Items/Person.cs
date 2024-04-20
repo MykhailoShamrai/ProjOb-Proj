@@ -1,4 +1,5 @@
-﻿using ProjOb_project.Visitors;
+﻿using ProjOb_project.Items.Listeners;
+using ProjOb_project.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Abstract class for persons named Person. Class Person inherited from ItemParsable
-    abstract internal class Person : ItemParsable
+    abstract internal class Person : ItemParsable, IListenerContact
     {
         [JsonInclude]
         private ulong _id;
@@ -25,8 +26,20 @@ namespace ProjOb_project.Items
         private ulong _age;
         [JsonInclude]
         private string _phone;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Phone
+        {
+            get { return _phone; }
+            set { _phone = value; }
+        }
         [JsonInclude]
         private string _email;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
 
         public Person(ulong _id, string _name, ulong _age, string _phone, string _email)
         {
@@ -35,6 +48,13 @@ namespace ProjOb_project.Items
             this._age = _age;
             this._phone = _phone;
             this._email = _email; 
+        }
+
+        public int Update(NetworkSourceSimulator.ContactInfoUpdateArgs args)
+        {
+            Phone = args.PhoneNumber;
+            Email = args.EmailAddress;
+            return 0;
         }
     }
 }

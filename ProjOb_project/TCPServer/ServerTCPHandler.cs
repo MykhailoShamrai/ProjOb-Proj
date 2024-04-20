@@ -71,8 +71,9 @@ namespace ProjOb_project.TCPServer
                         _handler = new ServerTCPHandler();
                         if (manaager != null)
                         {
-                            _handler._simulator.OnIDUpdate += manaager.onIDPublisher.Notify;
-                            _handler._simulator.OnPositionUpdate += manaager.onUpdatePositionPublisher.Notify;
+                            _handler._simulator.OnIDUpdate += manaager.OnIDPublisher.Notify;
+                            _handler._simulator.OnPositionUpdate += manaager.OnUpdatePositionPublisher.Notify;
+                            _handler._simulator.OnContactInfoUpdate += manaager.OnContactInfoPublisher.Notify;
                         }
                     }
                 }
