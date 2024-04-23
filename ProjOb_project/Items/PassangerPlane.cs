@@ -59,6 +59,7 @@ namespace ProjOb_project.Items
                         return -1;
                     }
                 }
+                visitor.visitSuccessfully(this, args);
                 Id = new_id;
                 lock (Database.DictionaryForPassangerPlaneLock)
                 {
@@ -66,7 +67,6 @@ namespace ProjOb_project.Items
                     Database.DictionaryForPassangerPlane.Add(new_id, this);
                 }
             }
-            visitor.visitSuccessfully(this, args);
             return 0;
         }
     }

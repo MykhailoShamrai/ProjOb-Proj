@@ -17,13 +17,22 @@ namespace ProjOb_project.Logers
             return filename;
         }
 
-
         public static void LogMessage(string log)
         {
             using (StreamWriter sw = new StreamWriter(GetCurrentFileName(), true))
             {
                 sw.WriteLine(log);
             }
+        }
+
+        public static void LogForOpening()
+        {
+            LogMessage($"{DateTime.Now.ToString("HH:mm:ss")}| Opening aplication.");
+            LogMessage("");
+        }
+        public static void LogForExit()
+        {
+            LogMessage("");
         }
     }
 }

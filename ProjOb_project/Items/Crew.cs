@@ -1,5 +1,6 @@
 ﻿using ProjOb_project.Items.Listeners;
 using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Log;
 using ProjOb_project.Visitors.Logs;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Crew inherited from Person, Person inherited from ItemParsable
-    internal class Crew : Person, IListenerID
+    internal class Crew : Person, IListenerID, IListenerContact
     {
         [JsonInclude]
         private ushort _practise;
@@ -44,6 +45,7 @@ namespace ProjOb_project.Items
                         return -1;
                     }
                 }
+                visitor.visitSuccessfully(this, args);
                 Id = new_id;
                 lock (Database.DictionaryForCrewLock)
                 {
@@ -51,7 +53,14 @@ namespace ProjOb_project.Items
                     Database.DictionaryForCrew.Add(new_id, this);
                 }
             }
+            return 0;
+        }
+
+        public int Update(NetworkSourceSimulator.ContactInfoUpdateArgs args, ContactChangedVisitor visitor)
+        {
             visitor.visitSuccessfully(this, args);
+            Phone = args.PhoneNumber;
+            Email = args.EmailAddress;
             return 0;
         }
     }

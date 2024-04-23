@@ -1,5 +1,7 @@
-﻿using ProjOb_project.Items.Listeners;
+﻿using NetworkSourceSimulator;
+using ProjOb_project.Items.Listeners;
 using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Log;
 using ProjOb_project.Visitors.Logs;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Class for Passanger inherited from Person, Person inherited from ItemParsable
-    internal class Passanger : Person, ILoadable, IListenerID
+    internal class Passanger : Person, ILoadable, IListenerID, IListenerContact
     {
         [JsonInclude]
         private string _class;
@@ -44,6 +46,7 @@ namespace ProjOb_project.Items
                         return -1;
                     }
                 }
+                visitor.visitSuccessfully(this, args);
                 Id = new_id;
                 lock (Database.DictionaryForPassangerLock)
                 {
@@ -51,7 +54,14 @@ namespace ProjOb_project.Items
                     Database.DictionaryForPassanger.Add(new_id, this);
                 }
             }
+            return 0;
+        }
+
+        public int Update(ContactInfoUpdateArgs args, ContactChangedVisitor visitor)
+        {
             visitor.visitSuccessfully(this, args);
+            Phone = args.PhoneNumber;
+            Email = args.EmailAddress;
             return 0;
         }
     }

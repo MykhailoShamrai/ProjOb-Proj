@@ -55,6 +55,7 @@ namespace ProjOb_project.Items
                         return -1;
                     }
                 }
+                visitor.visitSuccessfully(this, args);
                 Id = new_id;
                 lock (Database.DictionaryForCargoLock)
                 {
@@ -62,7 +63,6 @@ namespace ProjOb_project.Items
                     Database.DictionaryForCargo.Add(new_id, this);
                 }
             }
-            visitor.visitSuccessfully(this, args);
             return 0;
         }
     }

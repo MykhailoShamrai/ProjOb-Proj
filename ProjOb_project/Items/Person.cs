@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ProjOb_project.Items
 {
     // Abstract class for persons named Person. Class Person inherited from ItemParsable
-    abstract internal class Person : ItemParsable, IListenerContact
+    abstract internal class Person : ItemParsable
     {
         [JsonInclude]
         private ulong _id;
@@ -48,13 +48,6 @@ namespace ProjOb_project.Items
             this._age = _age;
             this._phone = _phone;
             this._email = _email; 
-        }
-
-        public int Update(NetworkSourceSimulator.ContactInfoUpdateArgs args)
-        {
-            Phone = args.PhoneNumber;
-            Email = args.EmailAddress;
-            return 0;
         }
     }
 }

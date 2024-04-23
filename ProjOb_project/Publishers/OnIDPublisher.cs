@@ -20,14 +20,19 @@ namespace ProjOb_project.Publishers
 
         public void Notify(object sender, NetworkSourceSimulator.IDUpdateArgs args)
         {
+            bool flag = false;
             foreach (var listener in _listeners)
             {
                 if (listener.Id == args.ObjectID)
                 {
-                    if (listener.Update(args, visitor) == 0)
-                    { }
+                    listener.Update(args, visitor);
+                    flag = true;
                     break;
                 }   
+            }
+            if (!flag)
+            {
+                Logers.Logger.LogMessage($"{DateTime.Now.ToString("HH:mm:ss")}| There is no instance with Id {args.ObjectID}");
             }
         }
     }

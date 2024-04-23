@@ -15,6 +15,7 @@ namespace ProjOb_project
     {
         static void Main(string[] args)
         {
+            Logers.Logger.LogForOpening();
             ConsoleService cs = ConsoleService.getInstance();
             List<ItemParsable> items;
             EventManager events = new EventManager();
@@ -28,6 +29,7 @@ namespace ProjOb_project
             GUIHandler.StartUpdatingGUI();
 
             cs.ReadFromConsole();
+            Logers.Logger.LogForExit();
         }
     }
 

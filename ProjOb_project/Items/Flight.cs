@@ -1,5 +1,6 @@
 ﻿using ProjOb_project.Items.Listeners;
 using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Log;
 using ProjOb_project.Visitors.Logs;
 using System.Text.Json.Serialization;
 
@@ -67,6 +68,12 @@ namespace ProjOb_project.Items
         }
         [JsonInclude]
         private float? _amsl;
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public float? Amsl
+        {
+            get { return _amsl; }
+            set { _amsl = value; }
+        }
         [JsonInclude]
         private ulong _planeAsId;
 
@@ -174,6 +181,7 @@ namespace ProjOb_project.Items
                         return -1;
                     }
                 }
+                visitor.visitSuccessfully(this, args);
                 Id = new_id;
                 lock (Database.DictionaryForFlightLock)
                 {
@@ -181,16 +189,16 @@ namespace ProjOb_project.Items
                     Database.DictionaryForFlight.Add(new_id, this);
                 }
             }
-            visitor.visitSuccessfully(this, args);
             return 0;
         }
-        // Zdecydować się na moment tego, kiedy pozycja jest aktualisowana
-        public int Update(NetworkSourceSimulator.PositionUpdateArgs args)
+
+        public int Update(NetworkSourceSimulator.PositionUpdateArgs args, PositionChangedVisitor visitor)
         {
             ulong objId = args.ObjectID;
             float longtitude = args.Longitude;
             float latitude = args.Latitude;
             float amsl = args.AMSL;
+            visitor.visitSuccessfully(this, args);
             _amsl = amsl;
             Latitude = latitude;
             Longtitude = longtitude;
@@ -205,6 +213,7 @@ namespace ProjOb_project.Items
                 LongtitudeDif = longtitudeDif / (landingTime - DateTime.Now).TotalSeconds;
                 return 0;
             }
+            visitor.visitError(this, args);
             return -1;
         }
     }
