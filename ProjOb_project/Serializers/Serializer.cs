@@ -14,7 +14,7 @@ namespace ProjOb_project.Serializers
 
         // Static method which takes name of file to serialization, IEnumrable collection with ItemParsable elements for serialiyation and Serializer object
         // which depends on type of serialization. Method should serialize collection in second argument to file in first argument
-        static public void SerializeToFile(string nameOfFile, IEnumerable<ItemParsable> collection, Serializer serializer)
+        static public void SerializeToFile(string nameOfFile, IEnumerable<ItemParsable> collection, Serializer serializer) // zmienic
         {
             serializer.SerializeObjects(nameOfFile, collection);
         }

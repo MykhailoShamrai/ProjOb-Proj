@@ -23,7 +23,9 @@ namespace ProjOb_project.Publishers
                 if (listener.Id == args.ObjectID)
                 {
                     if (listener.Update(args) == 0)
-                    { } // place for logging
+                    {
+
+                    } // place for logging
                     break;
                 }
             }

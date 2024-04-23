@@ -1,4 +1,5 @@
 ﻿using ProjOb_project.Items.Listeners;
+using ProjOb_project.Visitors.Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ProjOb_project.Publishers
     internal class OnIDPublisher
     {
         private List<IListenerID> _listeners = new List<IListenerID>();
+        private IdChangedVisitor visitor = new IdChangedVisitor();
 
         public void Subscribe(IListenerID listener)
         {
@@ -22,7 +24,7 @@ namespace ProjOb_project.Publishers
             {
                 if (listener.Id == args.ObjectID)
                 {
-                    if (listener.Update(args) == 0)
+                    if (listener.Update(args, visitor) == 0)
                     { }
                     break;
                 }   

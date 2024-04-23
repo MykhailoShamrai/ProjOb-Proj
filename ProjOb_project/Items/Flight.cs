@@ -1,5 +1,6 @@
 ﻿using ProjOb_project.Items.Listeners;
 using ProjOb_project.Visitors.Creating;
+using ProjOb_project.Visitors.Logs;
 using System.Text.Json.Serialization;
 
 
@@ -159,7 +160,7 @@ namespace ProjOb_project.Items
             acceptCreatingVisitor(new FtrParseVisitor());
         }
 
-        public int Update(NetworkSourceSimulator.IDUpdateArgs args)
+        public int Update(NetworkSourceSimulator.IDUpdateArgs args, IdChangedVisitor visitor)
         {
             ulong old_id = args.ObjectID;
             ulong new_id = args.NewObjectID;
@@ -169,6 +170,7 @@ namespace ProjOb_project.Items
                 {
                     if (new_id == item.Id)
                     {
+                        visitor.visitError(this, args);
                         return -1;
                     }
                 }
@@ -179,6 +181,7 @@ namespace ProjOb_project.Items
                     Database.DictionaryForFlight.Add(new_id, this);
                 }
             }
+            visitor.visitSuccessfully(this, args);
             return 0;
         }
         // Zdecydować się na moment tego, kiedy pozycja jest aktualisowana
