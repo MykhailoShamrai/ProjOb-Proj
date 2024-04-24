@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="NetworkSourceSimulator">
-      <HintPath>..\..\..\..\Desktop\Polibuda\Projob\Etap5\IncludesUpdated\NetworkSourceSimulator.dll</HintPath>
+      <HintPath>..\Includes\NetworkSourceSimulator.dll</HintPath>
     </Reference>
   </ItemGroup>
 
