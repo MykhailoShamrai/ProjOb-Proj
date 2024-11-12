@@ -11,6 +11,10 @@ namespace ProjOb_project.Logers
     internal static class Logger
     {
         static private DateTime _now = DateTime.Now;
+        static Logger()
+        {
+            Directory.CreateDirectory("Log");
+        }
         private static string GetCurrentFileName()
         {
             string filename = "./Log/" + _now.Date.ToString("dd_MM") + ".txt";

@@ -45,7 +45,6 @@ namespace ProjOb_project.TCPServer
         private ServerTCPHandler()
         {
             Directory.CreateDirectory("Snapshots");
-            Directory.CreateDirectory("Log");
             _consoleService = ConsoleService.getInstance();
             _thread_for_generating = new Thread(Start);
             _thread_for_objects_creating = new Thread(ReadBinary);
